@@ -2,800 +2,930 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CODE 911 | Dispatch Simulator</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CODE 911 | Emergency Communications</title>
 <style>
 *{box-sizing:border-box}
 :root{
---bg:#090f18;
---panel:#111c2a;
---panel2:#172537;
---border:#29394d;
---blue:#2188f5;
---green:#28ce83;
---red:#ff505c;
---yellow:#f5bd48;
---muted:#8495aa;
+--bg:#080d14;--panel:#101923;--panel2:#151f2b;
+--line:#293746;--text:#dce5ed;--muted:#8293a4;
+--blue:#3998e8;--green:#39c58a;--red:#e34e54;
+--amber:#e6ad48;--cyan:#50c4d6;
 }
-body{
-margin:0;
-background:var(--bg);
-color:#edf4fc;
-font-family:Arial,sans-serif;
-overflow-x:hidden;
-}
-header{
-height:68px;
-background:#101a28;
-border-bottom:1px solid var(--border);
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 22px;
-}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{
-background:#e63d49;
-width:39px;height:39px;
-border-radius:9px;
-display:grid;place-items:center;
-font-weight:bold;font-size:17px;
-}
-.brand h1{font-size:17px;margin:0;letter-spacing:1px}
-.brand small{color:var(--muted);font-size:10px;letter-spacing:2px}
-.header-right{display:flex;align-items:center;gap:20px;font-size:12px}
-.status-dot{color:var(--green)}
-.clock{font-size:17px;font-weight:bold;font-variant-numeric:tabular-nums}
-button{cursor:pointer;font-weight:bold}
+body{margin:0;background:var(--bg);color:var(--text);font:12px Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;color:var(--text);background:#263748;border:1px solid #405367;padding:8px 11px;border-radius:3px}
+button:hover:not(:disabled){background:#354e66}
 button:disabled{opacity:.4;cursor:not-allowed}
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;padding:15px 20px;
+header{
+height:54px;background:#0d1722;border-bottom:1px solid #344454;
+display:flex;align-items:center;justify-content:space-between;padding:0 15px;
 }
-.stat{
-background:var(--panel);
-border:1px solid var(--border);
-border-radius:9px;
-padding:13px 16px;
+.brand{display:flex;align-items:center;gap:10px}
+.logo{background:#bd303b;padding:8px 10px;font-weight:bold;font-size:17px}
+.brand h1{font-size:14px;margin:0;letter-spacing:1.5px}
+.brand small{display:block;color:var(--muted);font-size:9px;margin-top:3px;letter-spacing:1px}
+.topright{display:flex;gap:17px;align-items:center;color:var(--muted);font-size:10px}
+.online{color:var(--green)}
+.clock{font-size:16px;color:white;font-weight:bold;font-variant-numeric:tabular-nums}
+.toolbar{
+height:34px;background:#172330;border-bottom:1px solid var(--line);
+display:flex;align-items:center;gap:20px;padding:0 15px;color:#aab8c5;font-size:10px;
 }
-.stat span{display:block;color:var(--muted);font-size:10px;letter-spacing:1px}
-.stat strong{display:block;font-size:23px;margin-top:6px}
+.toolbar span:first-child{color:#fff}
+.toolbar b{color:var(--green)}
 main{
-display:grid;
-grid-template-columns:minmax(280px,1fr) minmax(330px,1.2fr) minmax(270px,.9fr);
-gap:13px;padding:0 20px 20px;
+display:grid;grid-template-columns:310px minmax(380px,1fr) 300px;
+gap:7px;padding:8px;align-items:start;
 }
-.panel{
-background:var(--panel);
-border:1px solid var(--border);
-border-radius:10px;
-overflow:hidden;
-min-width:0;
+.column{display:flex;flex-direction:column;gap:7px;min-width:0}
+.panel{background:var(--panel);border:1px solid var(--line);min-width:0}
+.ph{
+height:32px;background:#182431;border-bottom:1px solid var(--line);
+padding:0 10px;display:flex;align-items:center;justify-content:space-between;
+font-size:10px;font-weight:bold;letter-spacing:.8px;
 }
-.panel-head{
-padding:14px 15px;
-border-bottom:1px solid var(--border);
-display:flex;align-items:center;justify-content:space-between;
-font-size:12px;font-weight:bold;letter-spacing:1px;
+.ph small{color:var(--muted);font-weight:normal;letter-spacing:0}
+.pad{padding:10px}
+.section-label{color:#91a4b5;font-size:9px;letter-spacing:1px;font-weight:bold;margin:4px 0 9px}
+.phone{
+background:#101d28;border:1px solid #394c5d;padding:11px;margin-bottom:9px;
 }
-.panel-head small{color:var(--muted);font-size:10px}
-.content{padding:12px}
-.call-list{display:flex;flex-direction:column;gap:10px;max-height:600px;overflow:auto}
-.call{
-background:#182638;
-border:1px solid #304157;
-border-left:4px solid var(--yellow);
-border-radius:7px;padding:12px;
-cursor:pointer;
-transition:.15s;
+.phone-head{display:flex;justify-content:space-between;align-items:center}
+.ring{color:#ff6565;font-weight:bold;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.phone-number{font-size:20px;font-weight:bold;margin:9px 0 3px}
+.phone-sub{color:var(--muted);font-size:10px}
+.phone-buttons{display:flex;gap:6px;margin-top:12px}
+.phone-buttons button{flex:1}
+.answer{background:#176b4a;border-color:#2c9a6c}
+.hangup{background:#792f35;border-color:#a44b50}
+.call-status{color:var(--amber);font-weight:bold}
+.conversation{
+height:245px;overflow:auto;background:#0a121b;
+border:1px solid #263746;padding:9px;
+display:flex;flex-direction:column;gap:9px;
 }
-.call:hover{background:#20334a}
-.call.selected{border-color:var(--blue);background:#1c3550}
-.call.high{border-left-color:var(--red)}
-.call.medium{border-left-color:var(--yellow)}
-.call.low{border-left-color:var(--green)}
-.call-top{display:flex;justify-content:space-between;gap:5px}
-.call h3{font-size:13px;margin:0 0 7px}
-.call p{font-size:11px;color:#a9b8ca;margin:4px 0}
-.priority{
-font-size:9px;padding:4px 7px;border-radius:4px;
-background:#533038;color:#ff8991;height:max-content;
+.message{max-width:95%;padding:9px;border-radius:3px;line-height:1.5;font-size:11px}
+.caller{background:#233648;border-left:3px solid var(--cyan);align-self:flex-start}
+.dispatcher{background:#173c37;border-left:3px solid var(--green);align-self:flex-end}
+.message small{display:block;color:#9eafbd;font-size:9px;margin-bottom:4px}
+.questions{display:flex;flex-direction:column;gap:6px;margin-top:9px}
+.questions button{text-align:left;background:#192a3a;line-height:1.4}
+.questions button:hover{border-color:var(--blue)}
+.incident-card{background:#152230;border:1px solid var(--line);padding:10px}
+.field{margin-bottom:9px}
+.field label{display:block;color:var(--muted);font-size:9px;margin-bottom:5px;text-transform:uppercase}
+.field input,.field select,.field textarea{
+width:100%;background:#09121c;border:1px solid #394b5c;
+color:white;padding:8px;border-radius:2px;outline:none;
 }
-.priority.medium{background:#514323;color:#ffcf69}
-.priority.low{background:#174333;color:#70e7a8}
-.call-footer{
-display:flex;justify-content:space-between;
-margin-top:10px;font-size:10px;color:var(--muted);
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue)}
+.field textarea{resize:vertical;min-height:55px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.primary{background:#176ab0;border-color:#398fd0;width:100%;font-weight:bold}
+.success{background:#175e43;border-color:#278d64}
+.danger{background:#762f34;border-color:#a84b52}
+#map{width:100%;height:390px;display:block;background:#101c25}
+.map-legend{display:flex;gap:13px;flex-wrap:wrap;padding:9px;color:var(--muted);font-size:9px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.map-caption{padding:7px 9px;color:var(--muted);font-size:9px;border-top:1px solid var(--line)}
+.tabs{display:flex;background:#101923;border-bottom:1px solid var(--line)}
+.tab{flex:1;text-align:center;padding:10px 3px;color:var(--muted);font-size:9px;cursor:pointer}
+.tab.active{color:white;background:#1d3042;border-bottom:2px solid var(--blue)}
+.unit-row{
+display:grid;grid-template-columns:65px 1fr auto;gap:5px;align-items:center;
+padding:9px 7px;border-bottom:1px solid #243342;cursor:pointer;
 }
-.map-wrap{padding:10px;background:#0c1723}
-#map{
-width:100%;height:370px;display:block;
-border-radius:7px;background:#101e2a;
+.unit-row:hover,.unit-row.chosen{background:#1d3449}
+.unit-id{font-weight:bold;color:#e8f1f9;font-size:11px}
+.unit-dept{font-size:9px;color:var(--muted);margin-top:3px}
+.unit-state{font-size:9px;font-weight:bold}
+.available{color:var(--green)}.busy{color:var(--amber)}.onscene{color:var(--cyan)}
+.unit-select{font-size:9px;color:var(--muted)}
+.radio{
+height:190px;overflow:auto;background:#080f17;padding:8px;
+font:10px/1.6 monospace;
 }
-.map-legend{
-display:flex;gap:14px;flex-wrap:wrap;
-padding:12px;font-size:10px;color:var(--muted);
+.radio-line{padding:4px 0;border-bottom:1px solid #1d2a36}
+.radio-time{color:#6e9bbd}
+.radio-unit{color:#e4bd66;font-weight:bold}
+.radio-text{color:#b9cbd8}
+.incident-row{
+padding:9px;border-bottom:1px solid #293746;cursor:pointer;
 }
-.legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
-.unit-list{display:flex;flex-direction:column;gap:8px}
-.unit{
-padding:10px;background:#182638;
-border:1px solid #304157;border-radius:7px;
-cursor:pointer;
+.incident-row:hover{background:#1b2d40}
+.incident-row strong{font-size:11px}
+.incident-row small{display:block;color:var(--muted);margin-top:5px;font-size:9px}
+.tag{font-size:9px;padding:3px 5px;background:#3d3030;color:#ffaaaa}
+.muted{color:var(--muted)}
+.log{max-height:160px;overflow:auto;font:10px/1.6 monospace}
+.log div{border-bottom:1px solid #243342;padding:5px 0}
+.bottom{
+border-top:1px solid var(--line);background:#0d1721;
+padding:8px 15px;display:flex;justify-content:space-between;
+color:var(--muted);font-size:9px;
 }
-.unit.selected{border-color:var(--blue);background:#1b3652}
-.unit-top{display:flex;justify-content:space-between;font-size:12px;font-weight:bold}
-.unit small{display:block;color:var(--muted);margin-top:6px;font-size:10px}
-.unit-status{font-size:9px;color:var(--green)}
-.unit-status.busy{color:var(--yellow)}
-.unit-status.scene{color:#6eb7ff}
-.dispatch-btn{
-width:100%;padding:13px;background:var(--blue);
-color:white;border:0;border-radius:6px;margin-top:12px;
-}
-.dispatch-btn:hover{background:#086fd8}
-.secondary{
-width:100%;padding:10px;background:#26394f;
-color:white;border:1px solid var(--border);
-border-radius:6px;margin-top:8px;
-}
-.section-title{
-font-size:10px;color:var(--muted);
-letter-spacing:1px;margin:17px 0 9px;
-}
-.activity{
-max-height:185px;overflow:auto;
-font-size:10px;color:#aab9ca;
-}
-.activity div{
-padding:8px 0;border-bottom:1px solid #253448;
-line-height:1.5;
-}
-.activity b{color:#e9f2ff}
-.empty{
-color:var(--muted);font-size:12px;
-text-align:center;padding:25px 5px;
-}
-#toast{
-position:fixed;bottom:20px;left:50%;
-transform:translateX(-50%);
-background:#203b56;color:white;
-padding:12px 20px;border-radius:7px;
-font-size:12px;display:none;
-z-index:10;
-}
-.footer{
-padding:12px 20px;border-top:1px solid var(--border);
-color:var(--muted);font-size:10px;
-display:flex;justify-content:space-between;
-}
-@media(max-width:1000px){
-main{grid-template-columns:1fr 1fr}
-.right-panel{grid-column:1/-1}
-}
+.empty{padding:20px;text-align:center;color:var(--muted);font-size:11px}
+.hidden{display:none!important}
+@media(max-width:1050px){main{grid-template-columns:280px 1fr}.right{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}}
 @media(max-width:650px){
-header{padding:0 12px}
-.header-right{gap:9px}
-.stats{grid-template-columns:1fr 1fr;padding:10px}
-main{grid-template-columns:1fr;padding:0 10px 15px}
-.right-panel{grid-column:auto}
-#map{height:300px}
+main{grid-template-columns:1fr}.right{grid-column:auto;display:flex}
+.topright{gap:7px}.toolbar{gap:9px;font-size:9px;overflow:hidden}
+#map{height:310px}.conversation{height:220px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-<div class="brand">
-<div class="logo">911</div>
-<div>
-<h1>CODE 911</h1>
-<small>EMERGENCY DISPATCH CENTER</small>
-</div>
-</div>
-<div class="header-right">
-<span class="status-dot">● SYSTEM ONLINE</span>
-<span id="gameTime" class="clock">08:00:00</span>
-</div>
+ <div class="brand">
+  <div class="logo">911</div>
+  <div><h1>CODE 911</h1><small>METRO COUNTY EMERGENCY COMMUNICATIONS</small></div>
+ </div>
+ <div class="topright">
+  <span class="online">● CAD CONNECTED</span>
+  <span>CONSOLE 01</span>
+  <span>DISPATCHER: <b>OPERATOR</b></span>
+  <span class="clock" id="clock">08:00:00</span>
+ </div>
 </header>
 
-<section class="stats">
-<div class="stat"><span>ACTIVE INCIDENTS</span><strong id="activeCount">0</strong></div>
-<div class="stat"><span>AVAILABLE UNITS</span><strong id="availableCount">12</strong></div>
-<div class="stat"><span>CALLS RECEIVED</span><strong id="callsCount">0</strong></div>
-<div class="stat"><span>INCIDENTS RESOLVED</span><strong id="resolvedCount">0</strong></div>
-</section>
+<div class="toolbar">
+ <span>MAIN CONSOLE</span>
+ <span>PHONE: <b id="phoneBar">STANDBY</b></span>
+ <span>CAD: <b>ONLINE</b></span>
+ <span>RADIO: <b>CH-01 PRIMARY</b></span>
+ <span>MODE: TRAINING</span>
+</div>
 
 <main>
 
-<!-- CALLS -->
+<!-- LEFT: PHONE AND CALL TAKING -->
+<div class="column">
+
 <section class="panel">
-<div class="panel-head">
-<span>☎ INCOMING 911 CALLS</span>
-<small id="queueCount">0 WAITING</small>
-</div>
-<div class="content">
-<div id="callList" class="call-list">
-<div class="empty">Waiting for incoming emergency calls...</div>
-</div>
-</div>
+ <div class="ph"><span>☎ TELEPHONE CONTROL</span><small>911 TRUNK LINE 01</small></div>
+ <div class="pad">
+  <div class="phone">
+   <div class="phone-head">
+    <b>INCOMING EMERGENCY LINE</b>
+    <span class="ring" id="ringStatus">● STANDBY</span>
+   </div>
+   <div class="phone-number" id="callerNumber">---</div>
+   <div class="phone-sub" id="callerLocation">No active caller</div>
+   <div class="phone-buttons">
+    <button class="answer" id="answerBtn" onclick="answerCall()">ANSWER</button>
+    <button class="hangup" id="endBtn" onclick="endCall()" disabled>END CALL</button>
+   </div>
+  </div>
+
+  <div class="section-label">CALLER INFORMATION</div>
+  <div class="form-grid">
+   <div class="field"><label>Caller name</label><input id="callerName" placeholder="Unknown"></div>
+   <div class="field"><label>Callback number</label><input id="callback" placeholder="Unknown"></div>
+  </div>
+  <div class="field"><label>Caller location</label><input id="callerAddress" placeholder="Confirm address with caller"></div>
+  <div class="field"><label>Nature of emergency</label><input id="nature" placeholder="Not yet determined"></div>
+ </div>
 </section>
 
-<!-- MAP -->
 <section class="panel">
-<div class="panel-head">
-<span>▦ CITY OPERATIONS MAP</span>
-<small>METRO COUNTY</small>
-</div>
-<div class="map-wrap">
-<canvas id="map" width="700" height="500"></canvas>
-</div>
-<div class="map-legend">
-<span><i class="legend-dot" style="background:#348dff"></i>Police</span>
-<span><i class="legend-dot" style="background:#ff4949"></i>Fire</span>
-<span><i class="legend-dot" style="background:#39d994"></i>EMS</span>
-<span><i class="legend-dot" style="background:#ffcf48"></i>Incident</span>
-</div>
-<div class="content">
-<div class="section-title">SELECTED INCIDENT</div>
-<div id="incidentDetails" class="empty">Select an incoming call to view its details.</div>
-</div>
+ <div class="ph"><span>☎ CALL INTERROGATION</span><small id="callPhase">NO ACTIVE CALL</small></div>
+ <div class="pad">
+  <div class="conversation" id="conversation">
+   <div class="empty">Incoming calls will appear here. Answer the telephone to begin.</div>
+  </div>
+  <div class="questions" id="questions"></div>
+ </div>
 </section>
 
-<!-- UNITS -->
-<section class="panel right-panel">
-<div class="panel-head">
-<span>🚓 FIELD UNITS</span>
-<small id="unitCount">12 UNITS</small>
-</div>
-<div class="content">
-<div id="unitList" class="unit-list"></div>
-<button class="dispatch-btn" id="dispatchBtn" onclick="dispatchUnits()">DISPATCH SELECTED UNITS</button>
-<button class="secondary" onclick="clearSelection()">CLEAR SELECTION</button>
-
-<div class="section-title">DISPATCH ACTIVITY LOG</div>
-<div class="activity" id="activityLog">
-<div>System initialized. Dispatch center online.</div>
-</div>
-</div>
+<section class="panel">
+ <div class="ph"><span>CALL CONTROL</span><small>OPERATOR ACTIONS</small></div>
+ <div class="pad">
+  <button class="primary" style="margin-bottom:7px" onclick="openIncidentForm()" id="createBtn" disabled>CREATE CAD INCIDENT</button>
+  <button style="width:100%" onclick="nextCall()">NEXT INCOMING CALL (SCENARIO)</button>
+  <div style="font-size:9px;color:var(--muted);margin-top:8px">
+   Calls follow a fixed scenario sequence. No randomly generated emergencies.
+  </div>
+ </div>
 </section>
 
+</div>
+
+<!-- CENTER: CAD AND MAP -->
+<div class="column">
+
+<section class="panel">
+ <div class="ph"><span>▦ GEOGRAPHIC INFORMATION SYSTEM</span><small>METRO COUNTY / STREET VIEW</small></div>
+ <canvas id="map" width="800" height="550"></canvas>
+ <div class="map-legend">
+  <span><i class="dot" style="background:#438ff1"></i>POLICE</span>
+  <span><i class="dot" style="background:#ed5151"></i>FIRE</span>
+  <span><i class="dot" style="background:#36d69b"></i>EMS</span>
+  <span><i class="dot" style="background:#f2bd50"></i>INCIDENT</span>
+ </div>
+ <div class="map-caption">SIMULATED CITY MAP • UNIT POSITIONS ARE TRAINING DATA</div>
+</section>
+
+<section class="panel">
+ <div class="ph"><span>▤ COMPUTER AIDED DISPATCH</span><small>INCIDENT MANAGEMENT</small></div>
+ <div class="tabs">
+  <div class="tab active" onclick="showTab('active',this)">ACTIVE INCIDENTS</div>
+  <div class="tab" onclick="showTab('history',this)">HISTORY</div>
+  <div class="tab" onclick="showTab('form',this)">NEW INCIDENT</div>
+ </div>
+
+ <div id="activeTab" class="pad">
+  <div id="incidentList"><div class="empty">No active incidents.</div></div>
+ </div>
+ <div id="historyTab" class="pad hidden">
+  <div id="historyList" class="empty">No cleared incidents.</div>
+ </div>
+
+ <div id="formTab" class="pad hidden">
+  <div class="section-label">INCIDENT ENTRY FORM</div>
+  <div class="form-grid">
+   <div class="field"><label>Incident type</label>
+    <select id="formType">
+     <option>Police - General</option><option>Traffic Collision</option>
+     <option>Robbery</option><option>Domestic Disturbance</option>
+     <option>Fire - Structure</option><option>Fire - Vehicle</option>
+     <option>Medical Emergency</option><option>Cardiac Arrest</option>
+     <option>Overdose</option><option>Welfare Check</option>
+    </select>
+   </div>
+   <div class="field"><label>Priority</label>
+    <select id="formPriority"><option>1 - Emergency</option><option>2 - Urgent</option><option>3 - Routine</option></select>
+   </div>
+  </div>
+  <div class="field"><label>Incident address</label><input id="formAddress" placeholder="Street address"></div>
+  <div class="field"><label>Incident description</label><textarea id="formDescription" placeholder="Details of the incident..."></textarea></div>
+  <button class="primary" onclick="createManualIncident()">ENTER INCIDENT INTO CAD</button>
+ </div>
+</section>
+
+</div>
+
+<!-- RIGHT: UNITS AND RADIO -->
+<div class="column right">
+
+<section class="panel">
+ <div class="ph"><span>◈ UNIT STATUS / AVL</span><small id="unitTotal">12 UNITS</small></div>
+ <div class="pad" style="padding-bottom:3px">
+  <div class="form-grid" style="text-align:center">
+   <div><div class="section-label">AVAILABLE</div><b id="availTotal" style="color:var(--green);font-size:19px">12</b></div>
+   <div><div class="section-label">ASSIGNED</div><b id="busyTotal" style="color:var(--amber);font-size:19px">0</b></div>
+  </div>
+ </div>
+ <div id="unitList"></div>
+ <div class="pad">
+  <div class="section-label">UNIT ASSIGNMENT</div>
+  <div id="assignmentInfo" class="muted" style="font-size:10px;line-height:1.6">Select an incident, then select available units.</div>
+  <button class="primary" style="margin-top:10px" onclick="dispatchSelected()">DISPATCH SELECTED UNITS</button>
+ </div>
+</section>
+
+<section class="panel">
+ <div class="ph"><span>◉ RADIO CONTROL</span><small>PRIMARY CHANNEL 01</small></div>
+ <div class="pad">
+  <div class="field"><label>Transmit message</label>
+   <select id="radioUnit"></select>
+  </div>
+  <div class="field"><textarea id="radioMessage" placeholder="Enter radio transmission..."></textarea></div>
+  <button class="primary" onclick="transmitRadio()">TRANSMIT</button>
+  <div class="section-label" style="margin-top:15px">RADIO TRAFFIC / EVENT LOG</div>
+  <div class="radio" id="radioLog">
+   <div class="radio-line"><span class="radio-time">08:00:00</span> <span class="radio-unit">SYSTEM</span><br><span class="radio-text">Primary channel active. Awaiting traffic.</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="panel">
+ <div class="ph"><span>▤ SYSTEM EVENT LOG</span><small>CAD ACTIVITY</small></div>
+ <div class="pad"><div class="log" id="systemLog"><div>System initialized.</div><div>CAD database connected.</div><div>Radio channel 01 active.</div></div></div>
+</section>
+
+</div>
 </main>
 
-<div class="footer">
-<span>CODE 911 DISPATCH SIMULATOR</span>
-<span>TRAINING SIMULATION | VERSION 1.0</span>
+<div class="bottom">
+ <span>CODE 911 • METRO COUNTY</span>
+ <span>SIMULATION ONLY • NOT CONNECTED TO REAL 911 SERVICES</span>
+ <span>CAD VERSION 2.0</span>
 </div>
-
-<div id="toast"></div>
 
 <script>
-const $ = id => document.getElementById(id);
+/* =====================================
+   CODE 911 - SCRIPTED CALL SYSTEM
+   All scenarios are authored, not random.
+===================================== */
 
-let gameSeconds = 8*3600;
-let totalCalls = 0;
-let resolved = 0;
-let calls = [];
-let selectedCall = null;
-let selectedUnits = [];
-let nextCallId = 1;
+const $=id=>document.getElementById(id);
 
-const incidentTypes = [
+let seconds=8*3600;
+let scenarioIndex=0;
+let currentCall=null;
+let currentStep=0;
+let callAnswered=false;
+let callerReady=false;
+let calls=[];
+let history=[];
+let selectedIncident=null;
+let selectedUnits=[];
+let incidentNumber=1001;
+
+const scenarios=[
 {
-name:"Armed Robbery",
-type:"police",
-priority:"HIGH",
-description:"Caller reports an armed robbery in progress.",
-location:"Downtown Bank",
-address:"100 Main Street",
-x:350,y:190
-},
-{
-name:"Structure Fire",
-type:"fire",
-priority:"HIGH",
-description:"Caller reports smoke and flames coming from a building.",
-location:"West Industrial District",
-address:"240 Industrial Road",
-x:140,y:130
-},
-{
-name:"Medical Emergency",
+number:"(405) 555-0142",
+name:"Sarah Mitchell",
+address:"1428 West Elm Street",
+nature:"Medical Emergency",
 type:"ems",
-priority:"HIGH",
-description:"Caller reports a person unconscious and unresponsive.",
-location:"Central Shopping Mall",
-address:"450 Commerce Avenue",
-x:470,y:300
+priority:"1 - Emergency",
+description:"Caller reports a male experiencing severe chest pain and difficulty breathing.",
+x:300,y:190,
+opening:"911, what is the address of your emergency?",
+steps:[
+{
+question:"1428 West Elm Street. Please hurry! My husband is having chest pain!",
+options:[
+["Is he conscious and breathing?","Yes, he's awake, but he's having trouble breathing.","conscious"],
+["Tell me exactly what happened.","He said his chest started hurting about five minutes ago.","symptoms"],
+["Is anyone else there with you?","It's just me and him. I'm his wife.","alone"]
+]
 },
 {
-name:"Traffic Collision",
+question:"Is he conscious and breathing normally?",
+options:[
+["Is he awake and responding to you?","Yes, he can hear me, but he looks very pale.","awake"],
+["How old is he?","He's 62 years old.","age"],
+["Does he have a history of heart problems?","He has high blood pressure. I don't know about anything else.","history"]
+]
+},
+{
+question:"I understand. Does he have any other symptoms?",
+options:[
+["Is he sweating or feeling dizzy?","Yes! He's sweating a lot and says he feels dizzy.","symptoms"],
+["When did the pain start?","About five minutes ago.","time"],
+["Stay on the line with me. Help is being arranged.","Okay. Please hurry!","reassure"]
+]
+}
+],
+finish:"Caller remains on the line. The patient is conscious but experiencing chest pain and difficulty breathing."
+},
+{
+number:"(405) 555-0186",
+name:"Michael Carter",
+address:"500 Market Street",
+nature:"Armed Robbery",
 type:"police",
-priority:"MEDIUM",
-description:"Two vehicles involved in a collision. Traffic blocked.",
-location:"North Highway",
-address:"Highway 14",
-x:310,y:75
+priority:"1 - Emergency",
+description:"Caller reports an armed robbery at a convenience store. Suspect reportedly displayed a handgun.",
+x:530,y:160,
+opening:"911, what is the address of your emergency?",
+steps:[
+{
+question:"500 Market Street! Someone is robbing the store!",
+options:[
+["Are you inside the store right now?","Yes. I'm the cashier. I'm hiding behind the counter.","inside"],
+["Do you see a weapon?","Yes, he has a handgun.","weapon"],
+["Is anyone injured?","I don't think so. Everyone is hiding.","injuries"]
+]
 },
 {
-name:"House Fire",
-type:"fire",
-priority:"HIGH",
-description:"Residential house fire. Occupants may still be inside.",
-location:"Oakwood Neighborhood",
+question:"Can you safely describe the suspect?",
+options:[
+["What is the suspect wearing?","Black hoodie, blue jeans, and a dark baseball cap.","clothing"],
+["Which direction did the suspect go?","He's still inside near the front counter.","location"],
+["How many suspects are there?","Just one that I can see.","count"]
+]
+},
+{
+question:"Stay hidden and do not confront the suspect.",
+options:[
+["Can you see the suspect's vehicle?","There's a dark sedan parked out front.","vehicle"],
+["Are there customers inside?","There are two customers hiding in the back.","customers"],
+["Keep the phone with you if it is safe.","Okay. I'm staying down.","reassure"]
+]
+}
+],
+finish:"One suspect, reportedly armed with a handgun. Multiple occupants inside. Caller hiding behind counter."
+},
+{
+number:"(405) 555-0191",
+name:"Emily Johnson",
 address:"82 Oakwood Drive",
-x:540,y:110
-},
-{
-name:"Cardiac Arrest",
-type:"ems",
-priority:"HIGH",
-description:"Caller reports an individual suffering cardiac arrest.",
-location:"City Park",
-address:"25 Park Avenue",
-x:530,y:410
-},
-{
-name:"Domestic Disturbance",
-type:"police",
-priority:"MEDIUM",
-description:"Neighbors report a loud disturbance and possible violence.",
-location:"Southside Apartments",
-address:"190 South Street",
-x:180,y:390
-},
-{
-name:"Vehicle Theft",
-type:"police",
-priority:"LOW",
-description:"Caller reports their vehicle has been stolen.",
-location:"Riverside Parking",
-address:"60 River Road",
-x:90,y:290
-},
-{
-name:"Gas Leak",
+nature:"Residential Structure Fire",
 type:"fire",
-priority:"HIGH",
-description:"Strong smell of gas reported inside a commercial property.",
-location:"Market District",
-address:"320 Market Street",
-x:410,y:390
+priority:"1 - Emergency",
+description:"Caller reports a fire inside a residential home with smoke visible from the second floor.",
+x:170,y:370,
+opening:"911, what is the address of your emergency?",
+steps:[
+{
+question:"82 Oakwood Drive! There's a fire in my house!",
+options:[
+["Are all occupants outside?","I'm outside, but I don't know if my brother got out.","occupants"],
+["Where is the fire located?","It looks like it's coming from upstairs.","location"],
+["Is anyone injured?","I'm okay, but I'm coughing from the smoke.","injuries"]
+]
 },
 {
-name:"Welfare Check",
+question:"Are there people still possibly inside?",
+options:[
+["How many people may be inside?","My brother might still be in his bedroom.","count"],
+["Can you safely see the entrance?","No, there's too much smoke.","visibility"],
+["Do not re-enter the building.","I won't. Please send someone!","reassure"]
+]
+},
+{
+question:"Are there any other hazards?",
+options:[
+["Are there gas cylinders or hazardous materials?","There's a propane grill outside, near the garage.","hazards"],
+["Is the fire spreading?","The smoke is getting thicker.","spreading"],
+["Are neighboring houses occupied?","Yes, there are people next door.","neighbors"]
+]
+}
+],
+finish:"Fire reported upstairs. One occupant may remain inside. Caller outside and coughing from smoke."
+},
+{
+number:"(405) 555-0124",
+name:"David Reynolds",
+address:"Highway 14, near mile marker 8",
+nature:"Traffic Collision",
 type:"police",
-priority:"LOW",
-description:"Caller requests a welfare check on a resident.",
-location:"Pine Street",
-address:"72 Pine Street",
-x:610,y:210
+priority:"2 - Urgent",
+description:"Two-vehicle collision. Caller reports one vehicle blocking the roadway and a possible injury.",
+x:400,y:80,
+opening:"911, what is the address of your emergency?",
+steps:[
+{
+question:"There's been a bad crash on Highway 14!",
+options:[
+["How many vehicles are involved?","Two vehicles. One is blocking the right lane.","vehicles"],
+["Is anyone injured?","One driver says their neck hurts.","injuries"],
+["Are the vehicles on fire?","No, I don't see any smoke.","fire"]
+]
 },
 {
-name:"Overdose",
-type:"ems",
-priority:"HIGH",
-description:"Caller reports a possible drug overdose.",
-location:"Eastside Motel",
-address:"88 East Boulevard",
-x:620,y:350
+question:"Is traffic able to get around the vehicles?",
+options:[
+["Is the roadway completely blocked?","The right lane is blocked, but traffic is moving slowly.","traffic"],
+["Are the drivers outside their vehicles?","One is outside. The other is still sitting inside.","drivers"],
+["Can you provide a nearby landmark?","There's a gas station about a quarter mile away.","landmark"]
+]
 },
 {
-name:"Shoplifting",
-type:"police",
-priority:"LOW",
-description:"Store security reports a shoplifting incident.",
-location:"Metro Superstore",
-address:"500 Commerce Avenue",
-x:390,y:280
+question:"Stay at a safe distance from the roadway.",
+options:[
+["Do you see leaking fuel or debris?","There is glass and debris across the road.","debris"],
+["Is the injured driver conscious?","Yes, they're talking to me.","conscious"],
+["Can you safely wait for responders?","Yes, I'm parked off the shoulder.","safe"]
+]
+}
+],
+finish:"Two vehicles involved. One possible neck injury. Right lane partially blocked. Debris in roadway."
 }
 ];
 
-const unitData = [
-["PD-101","Police",90,100],
-["PD-102","Police",160,200],
-["PD-103","Police",270,340],
-["PD-104","Police",570,160],
-["PD-105","Police",490,420],
-["FD-201","Fire",110,370],
-["FD-202","Fire",300,110],
-["FD-203","Fire",570,310],
-["EMS-301","EMS",220,280],
-["EMS-302","EMS",440,120],
-["EMS-303","EMS",610,430],
-["EMS-304","EMS",350,450]
-];
+/* UNITS */
+const units=[
+{id:"1A12",dept:"Police",x:100,y:100},
+{id:"1A14",dept:"Police",x:190,y:260},
+{id:"1A16",dept:"Police",x:600,y:110},
+{id:"1A18",dept:"Police",x:660,y:400},
+{id:"2A21",dept:"Police",x:340,y:450},
+{id:"E21",dept:"Fire",x:100,y:400},
+{id:"E22",dept:"Fire",x:440,y:140},
+{id:"E23",dept:"Fire",x:680,y:260},
+{id:"M31",dept:"EMS",x:270,y:320},
+{id:"M32",dept:"EMS",x:520,y:400},
+{id:"M33",dept:"EMS",x:350,y:100},
+{id:"M34",dept:"EMS",x:700,y:490}
+].map(u=>({...u,status:"Available",incident:null,timer:0}));
 
-let units = unitData.map((u,i)=>({
-id:u[0],
-type:u[1],
-x:u[2],
-y:u[3],
-status:"Available",
-target:null,
-selected:false,
-timer:0
-}));
+/* CLOCK */
+function time(){
+return [Math.floor(seconds/3600)%24,Math.floor(seconds/60)%60,seconds%60]
+.map(n=>String(n).padStart(2,"0")).join(":");
+}
+setInterval(()=>{
+seconds++;
+$("clock").textContent=time();
+},1000);
 
-function log(message){
-const el=document.createElement("div");
-const time=formatTime();
-el.innerHTML=`<b>[${time}]</b> ${message}`;
-$("activityLog").prepend(el);
+/* LOGGING */
+function log(text){
+let el=document.createElement("div");
+el.textContent=`${time()}  ${text}`;
+$("systemLog").prepend(el);
+}
+function radio(unit,text){
+let el=document.createElement("div");
+el.className="radio-line";
+let t=document.createElement("span");
+t.className="radio-time";t.textContent=time()+" ";
+let u=document.createElement("span");
+u.className="radio-unit";u.textContent=unit+" ";
+let m=document.createElement("span");
+m.className="radio-text";m.textContent=text;
+el.append(t,u,document.createElement("br"),m);
+$("radioLog").prepend(el);
 }
 
-function formatTime(){
-let h=Math.floor(gameSeconds/3600)%24;
-let m=Math.floor(gameSeconds/60)%60;
-let s=gameSeconds%60;
-return [h,m,s].map(v=>String(v).padStart(2,"0")).join(":");
-}
-
-function toast(message){
-const t=$("toast");
-t.textContent=message;
-t.style.display="block";
-clearTimeout(toast.timer);
-toast.timer=setTimeout(()=>t.style.display="none",2200);
-}
-
-function createCall(){
-const template=incidentTypes[Math.floor(Math.random()*incidentTypes.length)];
-
-const call={
-id:nextCallId++,
-name:template.name,
-type:template.type,
-priority:template.priority,
-description:template.description,
-location:template.location,
-address:template.address,
-x:template.x+Math.floor(Math.random()*35-17),
-y:template.y+Math.floor(Math.random()*35-17),
-status:"Waiting",
-elapsed:0,
-assigned:[],
-timer:0
-};
-
-calls.unshift(call);
-totalCalls++;
-log(`NEW 911 CALL: ${call.name} - ${call.location}`);
-render();
-toast("NEW EMERGENCY CALL RECEIVED");
-}
-
-function selectCall(id){
-selectedCall=id;
-selectedUnits=[];
-render();
-}
-
-function selectUnit(id){
-const unit=units.find(u=>u.id===id);
-if(!unit || unit.status!=="Available")return;
-
-unit.selected=!unit.selected;
-
-if(unit.selected){
-if(!selectedUnits.includes(id))selectedUnits.push(id);
-}else{
-selectedUnits=selectedUnits.filter(x=>x!==id);
-}
-render();
-}
-
-function dispatchUnits(){
-const call=calls.find(c=>c.id===selectedCall);
-
-if(!call){
-toast("Select an incident first.");
+/* INCOMING CALL */
+function nextCall(){
+if(currentCall && !currentCall.finished){
+alert("Finish or end the current call before receiving another call.");
 return;
 }
-
-const available=selectedUnits
-.map(id=>units.find(u=>u.id===id))
-.filter(u=>u && u.status==="Available");
-
-if(available.length===0){
-toast("Select at least one available unit.");
+if(scenarioIndex>=scenarios.length){
+alert("All authored scenarios have been completed. More scenarios can be added to the scenario list.");
 return;
 }
-
-const compatible=available.filter(u=>
-call.type==="police"?u.type==="Police":
-call.type==="fire"?u.type==="Fire":
-u.type==="EMS"
-);
-
-if(compatible.length===0){
-toast("No compatible units selected for this call.");
-return;
-}
-
-compatible.forEach(unit=>{
-unit.status="En Route";
-unit.target=call.id;
-unit.timer=12+Math.floor(Math.random()*12);
-unit.selected=false;
-call.assigned.push(unit.id);
-});
-
-call.status="Units En Route";
-selectedUnits=[];
-log(`${compatible.map(u=>u.id).join(", ")} dispatched to ${call.name}.`);
-toast(`${compatible.length} UNIT(S) DISPATCHED`);
-render();
-}
-
-function clearSelection(){
-selectedUnits=[];
-units.forEach(u=>u.selected=false);
-render();
-}
-
-function completeIncident(call){
-call.status="Resolved";
-call.assigned.forEach(id=>{
-const unit=units.find(u=>u.id===id);
-if(unit){
-unit.status="Available";
-unit.target=null;
-unit.timer=0;
-unit.x=call.x+Math.random()*60-30;
-unit.y=call.y+Math.random()*60-30;
-}
-});
-resolved++;
-log(`INCIDENT #${call.id} RESOLVED: ${call.name}`);
-toast("INCIDENT RESOLVED");
-}
-
-function updateSimulation(){
-gameSeconds++;
-$("gameTime").textContent=formatTime();
-
-units.forEach(unit=>{
-if(unit.status==="En Route"){
-unit.timer--;
-if(unit.timer<=0){
-unit.status="On Scene";
-unit.timer=20+Math.floor(Math.random()*20);
-log(`${unit.id} arrived on scene.`);
-}
-}else if(unit.status==="On Scene"){
-unit.timer--;
-if(unit.timer<=0){
-const call=calls.find(c=>c.id===unit.target);
-if(call){
-unit.status="Clearing";
-unit.timer=5;
-log(`${unit.id} clearing scene.`);
-}
-}
-}else if(unit.status==="Clearing"){
-unit.timer--;
-if(unit.timer<=0){
-unit.status="Available";
-unit.target=null;
-unit.timer=0;
-}
-}
-});
-
-calls.forEach(call=>{
-if(call.status==="Waiting" || call.status==="Units En Route"){
-call.elapsed++;
-}
-if(call.status==="Units En Route"){
-const assigned=call.assigned.map(id=>units.find(u=>u.id===id)).filter(Boolean);
-if(assigned.length && assigned.every(u=>u.status==="On Scene" || u.status==="Clearing" || u.status==="Available")){
-call.status="On Scene";
-log(`Units arrived at ${call.location}. Incident being handled.`);
-}
-}
-if(call.status==="On Scene"){
-const assigned=call.assigned.map(id=>units.find(u=>u.id===id)).filter(Boolean);
-if(assigned.length && assigned.every(u=>u.status==="Available")){
-completeIncident(call);
-}
-}
-});
-
-render();
-}
-
-function render(){
-const active=calls.filter(c=>c.status!=="Resolved");
-
-$("activeCount").textContent=active.length;
-$("availableCount").textContent=units.filter(u=>u.status==="Available").length;
-$("callsCount").textContent=totalCalls;
-$("resolvedCount").textContent=resolved;
-$("queueCount").textContent=calls.filter(c=>c.status==="Waiting").length+" WAITING";
-$("unitCount").textContent=units.length+" UNITS";
-
-const list=$("callList");
-list.innerHTML="";
-
-const visible=calls.filter(c=>c.status!=="Resolved");
-
-if(visible.length===0){
-list.innerHTML='<div class="empty">No active calls. Standing by...</div>';
-}
-
-visible.forEach(call=>{
-const div=document.createElement("div");
-div.className=`call ${call.priority.toLowerCase()} ${selectedCall===call.id?"selected":""}`;
-div.onclick=()=>selectCall(call.id);
-
-div.innerHTML=`
-<div class="call-top">
-<h3>#${call.id} - ${call.name}</h3>
-<span class="priority ${call.priority.toLowerCase()}">${call.priority}</span>
-</div>
-<p>⌖ ${call.location}</p>
-<p>${call.address}</p>
-<p>${call.description}</p>
-<div class="call-footer">
-<span>${call.status}</span>
-<span>${Math.floor(call.elapsed/60)}:${String(call.elapsed%60).padStart(2,"0")}</span>
-</div>
-`;
-list.appendChild(div);
-});
-
-const unitList=$("unitList");
-unitList.innerHTML="";
-
-units.forEach(unit=>{
-const div=document.createElement("div");
-div.className=`unit ${unit.selected?"selected":""}`;
-div.onclick=()=>selectUnit(unit.id);
-
-const icon=unit.type==="Police"?"🚓":unit.type==="Fire"?"🚒":"🚑";
-const statusClass=unit.status==="Available"?"":unit.status==="On Scene"?"scene":"busy";
-
-div.innerHTML=`
-<div class="unit-top">
-<span>${icon} ${unit.id}</span>
-<span class="unit-status ${statusClass}">${unit.status.toUpperCase()}</span>
-</div>
-<small>${unit.type} Department ${unit.status!=="Available"?"• "+unit.timer+"s":""}</small>
-`;
-unitList.appendChild(div);
-});
-
-const details=$("incidentDetails");
-const selected=calls.find(c=>c.id===selectedCall);
-
-if(!selected){
-details.innerHTML="Select an incoming call to view its details.";
-details.className="empty";
-}else{
-details.className="";
-details.innerHTML=`
-<strong>#${selected.id} - ${selected.name}</strong>
-<p style="color:#aab9ca;font-size:11px;line-height:1.7">
-Location: ${selected.location}<br>
-Address: ${selected.address}<br>
-Priority: ${selected.priority}<br>
-Status: ${selected.status}<br>
-Description: ${selected.description}<br>
-Assigned Units: ${selected.assigned.length?selected.assigned.join(", "):"None"}
-</p>
-`;
-}
-
+currentCall=scenarios[scenarioIndex];
+scenarioIndex++;
+currentStep=0;
+callAnswered=false;
+callerReady=true;
+$("callerNumber").textContent=currentCall.number;
+$("callerLocation").textContent="Incoming call • Location not yet verified";
+$("ringStatus").textContent="● RINGING";
+$("ringStatus").className="ring";
+$("phoneBar").textContent="RINGING";
+$("answerBtn").disabled=false;
+$("endBtn").disabled=true;
+$("callPhase").textContent="INCOMING";
+$("conversation").innerHTML='<div class="message caller"><small>INCOMING CALL</small>911 emergency line ringing. Answer to connect with caller.</div>';
+$("questions").innerHTML="";
+$("createBtn").disabled=true;
+$("callerName").value="";
+$("callback").value=currentCall.number;
+$("callerAddress").value="";
+$("nature").value="";
+log("INCOMING CALL: "+currentCall.number);
+radio("SYSTEM","Incoming 911 telephone line.");
 drawMap();
 }
 
-function drawMap(){
-const canvas=$("map");
-const ctx=canvas.getContext("2d");
-const w=canvas.width,h=canvas.height;
+function answerCall(){
+if(!currentCall || callAnswered)return;
+callAnswered=true;
+$("ringStatus").textContent="● CONNECTED";
+$("ringStatus").className="online";
+$("phoneBar").textContent="CONNECTED";
+$("answerBtn").disabled=true;
+$("endBtn").disabled=false;
+$("callPhase").textContent="CALL IN PROGRESS";
+$("callerName").value=currentCall.name;
+$("callback").value=currentCall.number;
+$("conversation").innerHTML="";
+addMessage("DISPATCHER","911, what is the address of your emergency?");
+addMessage("CALLER",currentCall.opening);
+log("Operator answered emergency call.");
+radio("SYSTEM","911 call connected to console 01.");
+showQuestions();
+}
 
-ctx.fillStyle="#101e2a";
-ctx.fillRect(0,0,w,h);
+function addMessage(who,text){
+let el=document.createElement("div");
+el.className="message "+(who==="CALLER"?"caller":"dispatcher");
+let small=document.createElement("small");
+small.textContent=who;
+let content=document.createElement("span");
+content.textContent=text;
+el.append(small,content);
+$("conversation").appendChild(el);
+$("conversation").scrollTop=$("conversation").scrollHeight;
+}
+
+function showQuestions(){
+let box=$("questions");
+box.innerHTML="";
+if(!currentCall || !callAnswered)return;
+
+if(currentStep>=currentCall.steps.length){
+addMessage("DISPATCHER","Thank you. Stay on the line. I'm entering this information into our system.");
+addMessage("CALLER",currentCall.finish);
+$("callerAddress").value=currentCall.address;
+$("nature").value=currentCall.nature;
+$("createBtn").disabled=false;
+$("callPhase").textContent="READY FOR CAD ENTRY";
+return;
+}
+let step=currentCall.steps[currentStep];
+step.options.forEach(option=>{
+let btn=document.createElement("button");
+btn.textContent="ASK: "+option[0];
+btn.onclick=()=>chooseQuestion(option);
+box.appendChild(btn);
+});
+}
+
+function chooseQuestion(option){
+if(!currentCall || !callAnswered)return;
+addMessage("DISPATCHER",option[0]);
+addMessage("CALLER",option[1]);
+log("CALL INTERROGATION: "+option[0]);
+currentStep++;
+showQuestions();
+}
+
+function endCall(){
+if(!callAnswered)return;
+if(!confirm("End this telephone call?"))return;
+addMessage("SYSTEM","Telephone connection terminated.");
+callAnswered=false;
+$("ringStatus").textContent="● DISCONNECTED";
+$("phoneBar").textContent="STANDBY";
+$("endBtn").disabled=true;
+$("callPhase").textContent="CALL ENDED";
+$("questions").innerHTML="";
+log("Telephone connection ended.");
+}
+
+/* INCIDENT CREATION */
+function openIncidentForm(){
+if(!currentCall || !callAnswered || currentStep<currentCall.steps.length){
+alert("Complete caller interrogation first.");
+return;
+}
+$("formType").value=currentCall.type==="ems"?"Medical Emergency":
+currentCall.type==="fire"?"Fire - Structure":
+currentCall.nature==="Traffic Collision"?"Traffic Collision":"Robbery";
+$("formPriority").value=currentCall.priority;
+$("formAddress").value=currentCall.address;
+$("formDescription").value=currentCall.finish;
+showTab("form",document.querySelectorAll(".tab")[2]);
+}
+
+function createIncident(data){
+let incident={
+id:incidentNumber++,
+name:data.name,
+address:data.address,
+nature:data.nature,
+description:data.description,
+type:data.type,
+priority:data.priority,
+x:data.x??400,y:data.y??250,
+status:"PENDING",
+units:[],
+created:time(),
+caller:data.caller||"Unknown"
+};
+calls.unshift(incident);
+selectedIncident=incident.id;
+log("CAD INCIDENT CREATED: #"+incident.id+" "+incident.nature);
+radio("CAD","Incident "+incident.id+" entered into CAD.");
+render();
+showTab("active",document.querySelectorAll(".tab")[0]);
+return incident;
+}
+
+function createManualIncident(){
+let nature=$("formType").value;
+let type=nature.toLowerCase().includes("fire")?"fire":
+nature.toLowerCase().includes("medical")||nature.toLowerCase().includes("cardiac")||nature.toLowerCase().includes("overdose")?"ems":"police";
+let incident=createIncident({
+name:"Manual Entry",
+address:$("formAddress").value||"Location not provided",
+nature,
+description:$("formDescription").value||"No additional information.",
+type,
+priority:$("formPriority").value,
+caller:"Operator entry"
+});
+alert("Incident #"+incident.id+" successfully entered into CAD.");
+}
+
+function createCurrentIncident(){
+let c=currentCall;
+let type=c.type;
+let incident=createIncident({
+name:c.name,address:c.address,nature:c.nature,
+description:c.finish,type,priority:c.priority,
+x:c.x,y:c.y,caller:c.number
+});
+$("createBtn").disabled=true;
+currentCall.finished=true;
+$("callPhase").textContent="INCIDENT ENTERED";
+addMessage("SYSTEM","Incident #"+incident.id+" created in CAD.");
+return incident;
+}
+
+/* UNIT MANAGEMENT */
+function renderUnits(){
+let list=$("unitList");
+list.innerHTML="";
+units.forEach(u=>{
+let row=document.createElement("div");
+row.className="unit-row "+(selectedUnits.includes(u.id)?"chosen":"");
+let state=u.status==="Available"?"available":u.status==="On Scene"?"onscene":"busy";
+let status=u.status.toUpperCase();
+row.innerHTML=`
+<div><div class="unit-id">${u.id}</div><div class="unit-dept">${u.dept}</div></div>
+<div class="unit-select">${u.incident?"INC #"+u.incident:"FIELD UNIT"}</div>
+<div class="unit-state ${state}">${status}</div>`;
+row.onclick=()=>{
+if(u.status!=="Available")return;
+selectedUnits.includes(u.id)?
+selectedUnits=selectedUnits.filter(x=>x!==u.id):
+selectedUnits.push(u.id);
+renderUnits();
+};
+list.appendChild(row);
+});
+$("availTotal").textContent=units.filter(u=>u.status==="Available").length;
+$("busyTotal").textContent=units.filter(u=>u.status!=="Available").length;
+$("assignmentInfo").textContent=selectedUnits.length?
+"Selected: "+selectedUnits.join(", "):"Select an incident, then select available units.";
+let select=$("radioUnit");
+let old=select.value;
+select.innerHTML='<option value="DISPATCH">DISPATCH</option>';
+units.forEach(u=>{
+let o=document.createElement("option");
+o.value=u.id;o.textContent=u.id+" - "+u.dept;
+select.appendChild(o);
+});
+select.value=old||"DISPATCH";
+}
+
+function dispatchSelected(){
+let incident=calls.find(c=>c.id===selectedIncident);
+if(!incident){alert("Select an active incident first.");return;}
+if(!selectedUnits.length){alert("Select available units first.");return;}
+let compatible=selectedUnits.map(id=>units.find(u=>u.id===id)).filter(u=>
+u && u.status==="Available" &&
+(incident.type==="police"?u.dept==="Police":
+incident.type==="fire"?u.dept==="Fire":u.dept==="EMS")
+);
+if(!compatible.length){
+alert("No compatible units selected. Check the department.");
+return;
+}
+compatible.forEach(u=>{
+u.status="En Route";
+u.incident=incident.id;
+u.timer=12;
+incident.units.push(u.id);
+});
+incident.status="DISPATCHED";
+radio("DISPATCH",incident.units.join(", ")+" respond to incident "+incident.id+".");
+log("UNITS DISPATCHED TO INCIDENT #"+incident.id);
+selectedUnits=[];
+render();
+}
+
+/* RADIO */
+function transmitRadio(){
+let unit=$("radioUnit").value;
+let message=$("radioMessage").value.trim();
+if(!message){alert("Enter a transmission first.");return;}
+radio(unit,message);
+log("RADIO TRANSMISSION: "+unit+" - "+message);
+$("radioMessage").value="";
+}
+
+/* INCIDENT TABS */
+function showTab(name,element){
+["active","history","form"].forEach(t=>$(t+"Tab").classList.toggle("hidden",t!==name));
+document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+if(element)element.classList.add("active");
+}
+
+/* INCIDENT DISPLAY */
+function render(){
+let active=calls.filter(c=>c.status!=="CLEARED");
+let historyList=calls.filter(c=>c.status==="CLEARED");
+$("incidentList").innerHTML="";
+if(!active.length)$("incidentList").innerHTML='<div class="empty">No active incidents in CAD.</div>';
+active.forEach(c=>{
+let row=document.createElement("div");
+row.className="incident-row";
+row.onclick=()=>{selectedIncident=c.id;render();};
+row.style.background=selectedIncident===c.id?"#203449":"";
+row.innerHTML=`<div style="display:flex;justify-content:space-between">
+<strong>#${c.id} • ${c.nature}</strong><span class="tag">${c.priority}</span>
+</div><small>${c.address} • ${c.status}</small>
+<small>Units: ${c.units.length?c.units.join(", "):"NOT ASSIGNED"}</small>`;
+$("incidentList").appendChild(row);
+});
+$("historyList").innerHTML=historyList.length?historyList.map(c=>
+`<div class="incident-row"><strong>#${c.id} • ${c.nature}</strong><small>${c.address} • CLEARED</small></div>`
+).join(""):'<div class="empty">No cleared incidents.</div>';
+renderUnits();
+drawMap();
+}
+
+/* UNIT SIMULATION */
+setInterval(()=>{
+units.forEach(u=>{
+if(u.status==="En Route"){
+u.timer--;
+if(u.timer<=0){
+u.status="On Scene";
+radio(u.id,"Arrived on scene. Beginning assessment.");
+log(u.id+" ARRIVED ON SCENE.");
+let inc=calls.find(c=>c.id===u.incident);
+if(inc){
+inc.status="ON SCENE";
+}
+}
+}else if(u.status==="On Scene"){
+u.timer++;
+}
+});
+render();
+},1000);
+
+/* MANUAL UNIT STATUS */
+function clearUnit(id){
+let u=units.find(x=>x.id===id);
+if(!u)return;
+let inc=calls.find(c=>c.id===u.incident);
+u.status="Available";u.incident=null;u.timer=0;
+if(inc && inc.units.every(id=>{
+let unit=units.find(x=>x.id===id);
+return !unit || unit.status==="Available";
+})){
+inc.status="CLEARED";
+history.push(inc);
+log("INCIDENT #"+inc.id+" CLEARED.");
+radio("CAD","Incident "+inc.id+" cleared. All assigned units available.");
+}
+render();
+}
+
+/* MAP */
+function drawMap(){
+let c=$("map"),ctx=c.getContext("2d");
+let w=c.width,h=c.height;
+ctx.fillStyle="#101c25";ctx.fillRect(0,0,w,h);
 
 // City blocks
-for(let x=20;x<w;x+=85){
-for(let y=20;y<h;y+=75){
-ctx.fillStyle="#172a35";
-ctx.fillRect(x+7,y+7,55,45);
+for(let x=10;x<w;x+=65){
+for(let y=10;y<h;y+=65){
+ctx.fillStyle=(Math.floor(x/65+y/65)%2)?"#182b32":"#1a2d34";
+ctx.fillRect(x+5,y+5,48,48);
 }
 }
-
-// Roads
-ctx.strokeStyle="#344958";
-ctx.lineWidth=13;
-for(let x=55;x<w;x+=115){
+// Major roads
+ctx.strokeStyle="#43525b";ctx.lineWidth=17;
+for(let x=70;x<w;x+=150){
 ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
 }
-for(let y=65;y<h;y+=105){
+for(let y=70;y<h;y+=130){
 ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
 }
-
-// Road markings
-ctx.strokeStyle="#70808a";
-ctx.lineWidth=1.5;
-ctx.setLineDash([12,12]);
-for(let x=55;x<w;x+=115){
+// Road center markings
+ctx.strokeStyle="#829096";ctx.lineWidth=1;ctx.setLineDash([8,10]);
+for(let x=70;x<w;x+=150){
 ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
 }
-for(let y=65;y<h;y+=105){
+for(let y=70;y<h;y+=130){
 ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
 }
 ctx.setLineDash([]);
 
 // District labels
-ctx.fillStyle="#526879";
-ctx.font="bold 12px Arial";
-ctx.fillText("NORTH DISTRICT",20,25);
-ctx.fillText("DOWNTOWN",280,25);
-ctx.fillText("WESTSIDE",20,480);
-ctx.fillText("EASTSIDE",565,480);
-
-// Incident markers
-calls.filter(c=>c.status!=="Resolved").forEach(call=>{
-ctx.beginPath();
-ctx.arc(call.x,call.y,10,0,Math.PI*2);
-ctx.fillStyle="#ffcf48";
-ctx.fill();
-ctx.strokeStyle="#fff0ae";
-ctx.lineWidth=2;
-ctx.stroke();
-
-ctx.fillStyle="#ffffff";
-ctx.font="bold 11px Arial";
-ctx.fillText("!"+call.id,call.x+12,call.y-10);
-});
+ctx.fillStyle="#627d86";ctx.font="bold 12px Arial";
+ctx.fillText("NORTH DISTRICT",15,25);
+ctx.fillText("DOWNTOWN",320,25);
+ctx.fillText("WESTSIDE",15,530);
+ctx.fillText("EASTSIDE",640,530);
 
 // Units
-units.forEach(unit=>{
-const color=unit.type==="Police"?"#348dff":
-unit.type==="Fire"?"#ff4949":"#39d994";
-
-ctx.beginPath();
-ctx.arc(unit.x,unit.y,8,0,Math.PI*2);
+units.forEach(u=>{
+let color=u.dept==="Police"?"#438ff1":u.dept==="Fire"?"#ed5151":"#36d69b";
 ctx.fillStyle=color;
-ctx.fill();
+ctx.beginPath();ctx.arc(u.x,u.y,7,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle="#ffffff";ctx.lineWidth=1;ctx.stroke();
+ctx.fillStyle="#dce9ef";ctx.font="bold 10px Arial";
+ctx.fillText(u.id,u.x+9,u.y-7);
+});
 
-if(unit.selected){
-ctx.beginPath();
-ctx.arc(unit.x,unit.y,13,0,Math.PI*2);
-ctx.strokeStyle="#ffffff";
-ctx.lineWidth=2;
-ctx.stroke();
-}
-
-ctx.fillStyle="#ffffff";
-ctx.font="bold 9px Arial";
-ctx.fillText(unit.id,unit.x+11,unit.y+4);
+// Incidents
+calls.filter(c=>c.status!=="CLEARED").forEach(c=>{
+ctx.fillStyle="#f2bd50";
+ctx.beginPath();ctx.arc(c.x,c.y,10,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle="#fff0b4";ctx.stroke();
+ctx.fillStyle="white";ctx.font="bold 11px Arial";
+ctx.fillText("#"+c.id,c.x+13,c.y+4);
 });
 }
 
-// Initial calls
-createCall();
-createCall();
-createCall();
+/* INITIALIZE */
+render();
+$("clock").textContent=time();
+radio("SYSTEM","Communications console initialized.");
+log("All communications systems operational.");
 
-// Simulation clock
-setInterval(updateSimulation,1000);
-
-// Random calls every 15-25 seconds
-function scheduleCall(){
-const delay=15000+Math.random()*10000;
-setTimeout(()=>{
-createCall();
-scheduleCall();
-},delay);
-}
-scheduleCall();
-
+// The first authored call enters the telephone queue.
+// It is not answered automatically.
+nextCall();
 </script>
 </body>
 </html>
