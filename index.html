@@ -3,39 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CODE 911 | Emergency Communications</title>
+<title>CODE 911 | Advanced Communications</title>
+
 <style>
 *{box-sizing:border-box}
 :root{
---bg:#080d14;--panel:#101923;--panel2:#151f2b;
---line:#293746;--text:#dce5ed;--muted:#8293a4;
---blue:#3998e8;--green:#39c58a;--red:#e34e54;
---amber:#e6ad48;--cyan:#50c4d6;
+--bg:#080e16;--panel:#111c28;--panel2:#192735;
+--line:#2b3b4d;--text:#e0e9f2;--muted:#8295a8;
+--blue:#348fe0;--green:#36c58a;--red:#e45158;
+--amber:#e7b34e;--cyan:#53c8dc;
 }
 body{margin:0;background:var(--bg);color:var(--text);font:12px Arial,sans-serif}
 button,input,select,textarea{font:inherit}
-button{cursor:pointer;color:var(--text);background:#263748;border:1px solid #405367;padding:8px 11px;border-radius:3px}
-button:hover:not(:disabled){background:#354e66}
-button:disabled{opacity:.4;cursor:not-allowed}
+button{cursor:pointer;color:var(--text);background:#26394d;border:1px solid #42566a;padding:8px 11px;border-radius:3px}
+button:hover:not(:disabled){background:#38516a}
+button:disabled{opacity:.35;cursor:not-allowed}
 header{
-height:54px;background:#0d1722;border-bottom:1px solid #344454;
+height:55px;background:#0c1621;border-bottom:1px solid #354555;
 display:flex;align-items:center;justify-content:space-between;padding:0 15px;
 }
 .brand{display:flex;align-items:center;gap:10px}
 .logo{background:#bd303b;padding:8px 10px;font-weight:bold;font-size:17px}
 .brand h1{font-size:14px;margin:0;letter-spacing:1.5px}
 .brand small{display:block;color:var(--muted);font-size:9px;margin-top:3px;letter-spacing:1px}
-.topright{display:flex;gap:17px;align-items:center;color:var(--muted);font-size:10px}
+.topright{display:flex;gap:15px;align-items:center;color:var(--muted);font-size:10px}
 .online{color:var(--green)}
 .clock{font-size:16px;color:white;font-weight:bold;font-variant-numeric:tabular-nums}
 .toolbar{
-height:34px;background:#172330;border-bottom:1px solid var(--line);
-display:flex;align-items:center;gap:20px;padding:0 15px;color:#aab8c5;font-size:10px;
+height:34px;background:#172431;border-bottom:1px solid var(--line);
+display:flex;align-items:center;gap:19px;padding:0 15px;color:#aab8c5;font-size:10px;
 }
-.toolbar span:first-child{color:#fff}
 .toolbar b{color:var(--green)}
 main{
-display:grid;grid-template-columns:310px minmax(380px,1fr) 300px;
+display:grid;grid-template-columns:310px minmax(360px,1fr) 300px;
 gap:7px;padding:8px;align-items:start;
 }
 .column{display:flex;flex-direction:column;gap:7px;min-width:0}
@@ -47,33 +47,34 @@ font-size:10px;font-weight:bold;letter-spacing:.8px;
 }
 .ph small{color:var(--muted);font-weight:normal;letter-spacing:0}
 .pad{padding:10px}
-.section-label{color:#91a4b5;font-size:9px;letter-spacing:1px;font-weight:bold;margin:4px 0 9px}
-.phone{
-background:#101d28;border:1px solid #394c5d;padding:11px;margin-bottom:9px;
-}
+.section-label{color:#91a4b5;font-size:9px;letter-spacing:1px;font-weight:bold;margin:5px 0 9px}
+.phone{background:#101d28;border:1px solid #394c5d;padding:11px;margin-bottom:9px}
 .phone-head{display:flex;justify-content:space-between;align-items:center}
-.ring{color:#ff6565;font-weight:bold;animation:pulse 1s infinite}
-@keyframes pulse{50%{opacity:.35}}
+.ring{color:#ff6565;font-weight:bold}
+.pulse{animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.3}}
 .phone-number{font-size:20px;font-weight:bold;margin:9px 0 3px}
 .phone-sub{color:var(--muted);font-size:10px}
 .phone-buttons{display:flex;gap:6px;margin-top:12px}
 .phone-buttons button{flex:1}
 .answer{background:#176b4a;border-color:#2c9a6c}
 .hangup{background:#792f35;border-color:#a44b50}
-.call-status{color:var(--amber);font-weight:bold}
 .conversation{
-height:245px;overflow:auto;background:#0a121b;
-border:1px solid #263746;padding:9px;
-display:flex;flex-direction:column;gap:9px;
+height:265px;overflow:auto;background:#09121b;border:1px solid #263746;
+padding:9px;display:flex;flex-direction:column;gap:9px;
 }
-.message{max-width:95%;padding:9px;border-radius:3px;line-height:1.5;font-size:11px}
+.message{max-width:96%;padding:9px;border-radius:3px;line-height:1.5;font-size:11px}
 .caller{background:#233648;border-left:3px solid var(--cyan);align-self:flex-start}
 .dispatcher{background:#173c37;border-left:3px solid var(--green);align-self:flex-end}
+.system{background:#302c22;border-left:3px solid var(--amber);align-self:center}
 .message small{display:block;color:#9eafbd;font-size:9px;margin-bottom:4px}
 .questions{display:flex;flex-direction:column;gap:6px;margin-top:9px}
 .questions button{text-align:left;background:#192a3a;line-height:1.4}
 .questions button:hover{border-color:var(--blue)}
-.incident-card{background:#152230;border:1px solid var(--line);padding:10px}
+.voice-controls{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:9px}
+.mic{background:#175c8c;border-color:#358bc1}
+.mic.listening{background:#a52e39;border-color:#ed626a;animation:pulse 1s infinite}
+.voice-status{font-size:9px;color:var(--muted);margin-top:7px;line-height:1.5}
 .field{margin-bottom:9px}
 .field label{display:block;color:var(--muted);font-size:9px;margin-bottom:5px;text-transform:uppercase}
 .field input,.field select,.field textarea{
@@ -85,7 +86,6 @@ color:white;padding:8px;border-radius:2px;outline:none;
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .primary{background:#176ab0;border-color:#398fd0;width:100%;font-weight:bold}
 .success{background:#175e43;border-color:#278d64}
-.danger{background:#762f34;border-color:#a84b52}
 #map{width:100%;height:390px;display:block;background:#101c25}
 .map-legend{display:flex;gap:13px;flex-wrap:wrap;padding:9px;color:var(--muted);font-size:9px}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
@@ -94,7 +94,7 @@ color:white;padding:8px;border-radius:2px;outline:none;
 .tab{flex:1;text-align:center;padding:10px 3px;color:var(--muted);font-size:9px;cursor:pointer}
 .tab.active{color:white;background:#1d3042;border-bottom:2px solid var(--blue)}
 .unit-row{
-display:grid;grid-template-columns:65px 1fr auto;gap:5px;align-items:center;
+display:grid;grid-template-columns:62px 1fr auto;gap:5px;align-items:center;
 padding:9px 7px;border-bottom:1px solid #243342;cursor:pointer;
 }
 .unit-row:hover,.unit-row.chosen{background:#1d3449}
@@ -102,224 +102,199 @@ padding:9px 7px;border-bottom:1px solid #243342;cursor:pointer;
 .unit-dept{font-size:9px;color:var(--muted);margin-top:3px}
 .unit-state{font-size:9px;font-weight:bold}
 .available{color:var(--green)}.busy{color:var(--amber)}.onscene{color:var(--cyan)}
-.unit-select{font-size:9px;color:var(--muted)}
-.radio{
-height:190px;overflow:auto;background:#080f17;padding:8px;
-font:10px/1.6 monospace;
-}
+.radio{height:175px;overflow:auto;background:#080f17;padding:8px;font:10px/1.6 monospace}
 .radio-line{padding:4px 0;border-bottom:1px solid #1d2a36}
-.radio-time{color:#6e9bbd}
-.radio-unit{color:#e4bd66;font-weight:bold}
+.radio-time{color:#6e9bbd}.radio-unit{color:#e4bd66;font-weight:bold}
 .radio-text{color:#b9cbd8}
-.incident-row{
-padding:9px;border-bottom:1px solid #293746;cursor:pointer;
-}
+.incident-row{padding:9px;border-bottom:1px solid #293746;cursor:pointer}
 .incident-row:hover{background:#1b2d40}
 .incident-row strong{font-size:11px}
 .incident-row small{display:block;color:var(--muted);margin-top:5px;font-size:9px}
 .tag{font-size:9px;padding:3px 5px;background:#3d3030;color:#ffaaaa}
 .muted{color:var(--muted)}
-.log{max-height:160px;overflow:auto;font:10px/1.6 monospace}
+.log{max-height:145px;overflow:auto;font:10px/1.6 monospace}
 .log div{border-bottom:1px solid #243342;padding:5px 0}
-.bottom{
-border-top:1px solid var(--line);background:#0d1721;
-padding:8px 15px;display:flex;justify-content:space-between;
-color:var(--muted);font-size:9px;
-}
 .empty{padding:20px;text-align:center;color:var(--muted);font-size:11px}
 .hidden{display:none!important}
+.bottom{border-top:1px solid var(--line);background:#0d1721;padding:8px 15px;display:flex;justify-content:space-between;color:var(--muted);font-size:9px}
 @media(max-width:1050px){main{grid-template-columns:280px 1fr}.right{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}}
 @media(max-width:650px){
 main{grid-template-columns:1fr}.right{grid-column:auto;display:flex}
 .topright{gap:7px}.toolbar{gap:9px;font-size:9px;overflow:hidden}
-#map{height:310px}.conversation{height:220px}
+#map{height:310px}.conversation{height:230px}
 }
 </style>
 </head>
 <body>
 
 <header>
- <div class="brand">
-  <div class="logo">911</div>
-  <div><h1>CODE 911</h1><small>METRO COUNTY EMERGENCY COMMUNICATIONS</small></div>
- </div>
- <div class="topright">
-  <span class="online">● CAD CONNECTED</span>
-  <span>CONSOLE 01</span>
-  <span>DISPATCHER: <b>OPERATOR</b></span>
-  <span class="clock" id="clock">08:00:00</span>
- </div>
+<div class="brand">
+<div class="logo">911</div>
+<div><h1>CODE 911</h1><small>METRO COUNTY EMERGENCY COMMUNICATIONS</small></div>
+</div>
+<div class="topright">
+<span class="online">● CAD CONNECTED</span>
+<span>CONSOLE 01</span>
+<span>OPERATOR: DISPATCH</span>
+<span class="clock" id="clock">08:00:00</span>
+</div>
 </header>
 
 <div class="toolbar">
- <span>MAIN CONSOLE</span>
- <span>PHONE: <b id="phoneBar">STANDBY</b></span>
- <span>CAD: <b>ONLINE</b></span>
- <span>RADIO: <b>CH-01 PRIMARY</b></span>
- <span>MODE: TRAINING</span>
+<span>MAIN CONSOLE</span>
+<span>PHONE: <b id="phoneBar">STANDBY</b></span>
+<span>CAD: <b>ONLINE</b></span>
+<span>RADIO: <b>CH-01 PRIMARY</b></span>
+<span>MODE: TRAINING</span>
 </div>
 
 <main>
 
-<!-- LEFT: PHONE AND CALL TAKING -->
+<!-- PHONE AND CALL TAKING -->
 <div class="column">
 
 <section class="panel">
- <div class="ph"><span>☎ TELEPHONE CONTROL</span><small>911 TRUNK LINE 01</small></div>
- <div class="pad">
-  <div class="phone">
-   <div class="phone-head">
-    <b>INCOMING EMERGENCY LINE</b>
-    <span class="ring" id="ringStatus">● STANDBY</span>
-   </div>
-   <div class="phone-number" id="callerNumber">---</div>
-   <div class="phone-sub" id="callerLocation">No active caller</div>
-   <div class="phone-buttons">
-    <button class="answer" id="answerBtn" onclick="answerCall()">ANSWER</button>
-    <button class="hangup" id="endBtn" onclick="endCall()" disabled>END CALL</button>
-   </div>
-  </div>
-
-  <div class="section-label">CALLER INFORMATION</div>
-  <div class="form-grid">
-   <div class="field"><label>Caller name</label><input id="callerName" placeholder="Unknown"></div>
-   <div class="field"><label>Callback number</label><input id="callback" placeholder="Unknown"></div>
-  </div>
-  <div class="field"><label>Caller location</label><input id="callerAddress" placeholder="Confirm address with caller"></div>
-  <div class="field"><label>Nature of emergency</label><input id="nature" placeholder="Not yet determined"></div>
- </div>
-</section>
-
-<section class="panel">
- <div class="ph"><span>☎ CALL INTERROGATION</span><small id="callPhase">NO ACTIVE CALL</small></div>
- <div class="pad">
-  <div class="conversation" id="conversation">
-   <div class="empty">Incoming calls will appear here. Answer the telephone to begin.</div>
-  </div>
-  <div class="questions" id="questions"></div>
- </div>
-</section>
-
-<section class="panel">
- <div class="ph"><span>CALL CONTROL</span><small>OPERATOR ACTIONS</small></div>
- <div class="pad">
-  <button class="primary" style="margin-bottom:7px" onclick="openIncidentForm()" id="createBtn" disabled>CREATE CAD INCIDENT</button>
-  <button style="width:100%" onclick="nextCall()">NEXT INCOMING CALL (SCENARIO)</button>
-  <div style="font-size:9px;color:var(--muted);margin-top:8px">
-   Calls follow a fixed scenario sequence. No randomly generated emergencies.
-  </div>
- </div>
-</section>
-
+<div class="ph"><span>☎ TELEPHONE CONTROL</span><small>911 TRUNK LINE 01</small></div>
+<div class="pad">
+<div class="phone">
+<div class="phone-head">
+<b>INCOMING EMERGENCY LINE</b>
+<span class="ring" id="ringStatus">● STANDBY</span>
+</div>
+<div class="phone-number" id="callerNumber">---</div>
+<div class="phone-sub" id="callerLocation">No active caller</div>
+<div class="phone-buttons">
+<button class="answer" id="answerBtn" onclick="answerCall()" disabled>ANSWER</button>
+<button class="hangup" id="endBtn" onclick="endCall()" disabled>END CALL</button>
+</div>
 </div>
 
-<!-- CENTER: CAD AND MAP -->
+<div class="section-label">CALLER INFORMATION</div>
+<div class="form-grid">
+<div class="field"><label>Caller name</label><input id="callerName" placeholder="Unknown"></div>
+<div class="field"><label>Callback number</label><input id="callback" placeholder="Unknown"></div>
+</div>
+<div class="field"><label>Caller location</label><input id="callerAddress" placeholder="Confirm address"></div>
+<div class="field"><label>Nature of emergency</label><input id="nature" placeholder="Not yet determined"></div>
+</div>
+</section>
+
+<section class="panel">
+<div class="ph"><span>☎ CALL INTERROGATION</span><small id="callPhase">NO ACTIVE CALL</small></div>
+<div class="pad">
+<div class="conversation" id="conversation">
+<div class="empty">Incoming calls will appear here.</div>
+</div>
+
+<div class="voice-controls">
+<button class="mic" id="micBtn" onclick="toggleMic()" disabled>🎙 TALK TO CALLER</button>
+<button onclick="toggleVoice()" id="voiceBtn">🔊 VOICE: ON</button>
+</div>
+<div class="voice-status" id="voiceStatus">Voice system ready. Answer a call to begin.</div>
+<div class="questions" id="questions"></div>
+</div>
+</section>
+
+<section class="panel">
+<div class="ph"><span>CALL CONTROL</span><small>OPERATOR ACTIONS</small></div>
+<div class="pad">
+<button class="primary" onclick="createCurrentIncident()" id="createBtn" disabled>CREATE CAD INCIDENT</button>
+<button style="width:100%;margin-top:7px" onclick="nextCall()">NEXT INCOMING CALL</button>
+<div style="font-size:9px;color:var(--muted);margin-top:8px">Authored scenarios • No random call generation</div>
+</div>
+</section>
+</div>
+
+<!-- MAP AND CAD -->
 <div class="column">
-
 <section class="panel">
- <div class="ph"><span>▦ GEOGRAPHIC INFORMATION SYSTEM</span><small>METRO COUNTY / STREET VIEW</small></div>
- <canvas id="map" width="800" height="550"></canvas>
- <div class="map-legend">
-  <span><i class="dot" style="background:#438ff1"></i>POLICE</span>
-  <span><i class="dot" style="background:#ed5151"></i>FIRE</span>
-  <span><i class="dot" style="background:#36d69b"></i>EMS</span>
-  <span><i class="dot" style="background:#f2bd50"></i>INCIDENT</span>
- </div>
- <div class="map-caption">SIMULATED CITY MAP • UNIT POSITIONS ARE TRAINING DATA</div>
+<div class="ph"><span>▦ GEOGRAPHIC INFORMATION SYSTEM</span><small>METRO COUNTY</small></div>
+<canvas id="map" width="800" height="550"></canvas>
+<div class="map-legend">
+<span><i class="dot" style="background:#438ff1"></i>POLICE</span>
+<span><i class="dot" style="background:#ed5151"></i>FIRE</span>
+<span><i class="dot" style="background:#36d69b"></i>EMS</span>
+<span><i class="dot" style="background:#f2bd50"></i>INCIDENT</span>
+</div>
+<div class="map-caption">SIMULATED CITY MAP • TRAINING DATA</div>
 </section>
 
 <section class="panel">
- <div class="ph"><span>▤ COMPUTER AIDED DISPATCH</span><small>INCIDENT MANAGEMENT</small></div>
- <div class="tabs">
-  <div class="tab active" onclick="showTab('active',this)">ACTIVE INCIDENTS</div>
-  <div class="tab" onclick="showTab('history',this)">HISTORY</div>
-  <div class="tab" onclick="showTab('form',this)">NEW INCIDENT</div>
- </div>
-
- <div id="activeTab" class="pad">
-  <div id="incidentList"><div class="empty">No active incidents.</div></div>
- </div>
- <div id="historyTab" class="pad hidden">
-  <div id="historyList" class="empty">No cleared incidents.</div>
- </div>
-
- <div id="formTab" class="pad hidden">
-  <div class="section-label">INCIDENT ENTRY FORM</div>
-  <div class="form-grid">
-   <div class="field"><label>Incident type</label>
-    <select id="formType">
-     <option>Police - General</option><option>Traffic Collision</option>
-     <option>Robbery</option><option>Domestic Disturbance</option>
-     <option>Fire - Structure</option><option>Fire - Vehicle</option>
-     <option>Medical Emergency</option><option>Cardiac Arrest</option>
-     <option>Overdose</option><option>Welfare Check</option>
-    </select>
-   </div>
-   <div class="field"><label>Priority</label>
-    <select id="formPriority"><option>1 - Emergency</option><option>2 - Urgent</option><option>3 - Routine</option></select>
-   </div>
-  </div>
-  <div class="field"><label>Incident address</label><input id="formAddress" placeholder="Street address"></div>
-  <div class="field"><label>Incident description</label><textarea id="formDescription" placeholder="Details of the incident..."></textarea></div>
-  <button class="primary" onclick="createManualIncident()">ENTER INCIDENT INTO CAD</button>
- </div>
+<div class="ph"><span>▤ COMPUTER AIDED DISPATCH</span><small>INCIDENT MANAGEMENT</small></div>
+<div class="tabs">
+<div class="tab active" onclick="showTab('active',this)">ACTIVE INCIDENTS</div>
+<div class="tab" onclick="showTab('history',this)">HISTORY</div>
+<div class="tab" onclick="showTab('form',this)">NEW INCIDENT</div>
+</div>
+<div id="activeTab" class="pad"><div id="incidentList"><div class="empty">No active incidents.</div></div></div>
+<div id="historyTab" class="pad hidden"><div id="historyList" class="empty">No cleared incidents.</div></div>
+<div id="formTab" class="pad hidden">
+<div class="section-label">INCIDENT ENTRY FORM</div>
+<div class="form-grid">
+<div class="field"><label>Incident type</label>
+<select id="formType">
+<option>Police - General</option><option>Traffic Collision</option>
+<option>Robbery</option><option>Domestic Disturbance</option>
+<option>Fire - Structure</option><option>Medical Emergency</option>
+<option>Cardiac Arrest</option><option>Overdose</option>
+</select></div>
+<div class="field"><label>Priority</label>
+<select id="formPriority"><option>1 - Emergency</option><option>2 - Urgent</option><option>3 - Routine</option></select></div>
+</div>
+<div class="field"><label>Incident address</label><input id="formAddress"></div>
+<div class="field"><label>Description</label><textarea id="formDescription"></textarea></div>
+<button class="primary" onclick="createManualIncident()">ENTER INCIDENT INTO CAD</button>
+</div>
 </section>
-
 </div>
 
-<!-- RIGHT: UNITS AND RADIO -->
+<!-- UNITS AND RADIO -->
 <div class="column right">
-
 <section class="panel">
- <div class="ph"><span>◈ UNIT STATUS / AVL</span><small id="unitTotal">12 UNITS</small></div>
- <div class="pad" style="padding-bottom:3px">
-  <div class="form-grid" style="text-align:center">
-   <div><div class="section-label">AVAILABLE</div><b id="availTotal" style="color:var(--green);font-size:19px">12</b></div>
-   <div><div class="section-label">ASSIGNED</div><b id="busyTotal" style="color:var(--amber);font-size:19px">0</b></div>
-  </div>
- </div>
- <div id="unitList"></div>
- <div class="pad">
-  <div class="section-label">UNIT ASSIGNMENT</div>
-  <div id="assignmentInfo" class="muted" style="font-size:10px;line-height:1.6">Select an incident, then select available units.</div>
-  <button class="primary" style="margin-top:10px" onclick="dispatchSelected()">DISPATCH SELECTED UNITS</button>
- </div>
+<div class="ph"><span>◈ UNIT STATUS / AVL</span><small>12 UNITS</small></div>
+<div class="pad">
+<div class="form-grid" style="text-align:center">
+<div><div class="section-label">AVAILABLE</div><b id="availTotal" style="color:var(--green);font-size:19px">12</b></div>
+<div><div class="section-label">ASSIGNED</div><b id="busyTotal" style="color:var(--amber);font-size:19px">0</b></div>
+</div>
+</div>
+<div id="unitList"></div>
+<div class="pad">
+<div class="section-label">UNIT ASSIGNMENT</div>
+<div id="assignmentInfo" class="muted" style="font-size:10px;line-height:1.6">Select an incident, then available units.</div>
+<button class="primary" style="margin-top:10px" onclick="dispatchSelected()">DISPATCH SELECTED UNITS</button>
+<button style="width:100%;margin-top:6px" onclick="clearSelectedUnit()">CLEAR SELECTED UNIT</button>
+</div>
 </section>
 
 <section class="panel">
- <div class="ph"><span>◉ RADIO CONTROL</span><small>PRIMARY CHANNEL 01</small></div>
- <div class="pad">
-  <div class="field"><label>Transmit message</label>
-   <select id="radioUnit"></select>
-  </div>
-  <div class="field"><textarea id="radioMessage" placeholder="Enter radio transmission..."></textarea></div>
-  <button class="primary" onclick="transmitRadio()">TRANSMIT</button>
-  <div class="section-label" style="margin-top:15px">RADIO TRAFFIC / EVENT LOG</div>
-  <div class="radio" id="radioLog">
-   <div class="radio-line"><span class="radio-time">08:00:00</span> <span class="radio-unit">SYSTEM</span><br><span class="radio-text">Primary channel active. Awaiting traffic.</span></div>
-  </div>
- </div>
+<div class="ph"><span>◉ RADIO CONTROL</span><small>CH-01 PRIMARY</small></div>
+<div class="pad">
+<div class="field"><label>Transmitting unit</label><select id="radioUnit"></select></div>
+<div class="field"><label>Radio message</label><textarea id="radioMessage" placeholder="Enter transmission..."></textarea></div>
+<button class="primary" onclick="transmitRadio()">TRANSMIT</button>
+<div class="section-label" style="margin-top:15px">RADIO TRAFFIC</div>
+<div class="radio" id="radioLog"></div>
+</div>
 </section>
 
 <section class="panel">
- <div class="ph"><span>▤ SYSTEM EVENT LOG</span><small>CAD ACTIVITY</small></div>
- <div class="pad"><div class="log" id="systemLog"><div>System initialized.</div><div>CAD database connected.</div><div>Radio channel 01 active.</div></div></div>
+<div class="ph"><span>▤ SYSTEM EVENT LOG</span><small>CAD ACTIVITY</small></div>
+<div class="pad"><div class="log" id="systemLog"></div></div>
 </section>
-
 </div>
 </main>
 
 <div class="bottom">
- <span>CODE 911 • METRO COUNTY</span>
- <span>SIMULATION ONLY • NOT CONNECTED TO REAL 911 SERVICES</span>
- <span>CAD VERSION 2.0</span>
+<span>CODE 911 • METRO COUNTY</span>
+<span>SIMULATION ONLY • NOT CONNECTED TO REAL 911</span>
+<span>ADVANCED COMMUNICATIONS 3.0</span>
 </div>
 
 <script>
-/* =====================================
-   CODE 911 - SCRIPTED CALL SYSTEM
-   All scenarios are authored, not random.
-===================================== */
+/* ==================================
+   CODE 911 ADVANCED COMMUNICATIONS
+   ================================== */
 
 const $=id=>document.getElementById(id);
 
@@ -328,295 +303,287 @@ let scenarioIndex=0;
 let currentCall=null;
 let currentStep=0;
 let callAnswered=false;
-let callerReady=false;
+let voiceEnabled=true;
+let listening=false;
+let recognition=null;
 let calls=[];
-let history=[];
 let selectedIncident=null;
 let selectedUnits=[];
 let incidentNumber=1001;
+let ringtoneTimer=null;
+let audioContext=null;
 
 const scenarios=[
 {
-number:"(405) 555-0142",
-name:"Sarah Mitchell",
-address:"1428 West Elm Street",
-nature:"Medical Emergency",
-type:"ems",
-priority:"1 - Emergency",
-description:"Caller reports a male experiencing severe chest pain and difficulty breathing.",
-x:300,y:190,
+number:"(405) 555-0142",name:"Sarah Mitchell",
+address:"1428 West Elm Street",nature:"Medical Emergency",
+type:"ems",priority:"1 - Emergency",x:300,y:190,
 opening:"911, what is the address of your emergency?",
 steps:[
-{
-question:"1428 West Elm Street. Please hurry! My husband is having chest pain!",
-options:[
-["Is he conscious and breathing?","Yes, he's awake, but he's having trouble breathing.","conscious"],
-["Tell me exactly what happened.","He said his chest started hurting about five minutes ago.","symptoms"],
-["Is anyone else there with you?","It's just me and him. I'm his wife.","alone"]
-]
-},
-{
-question:"Is he conscious and breathing normally?",
-options:[
-["Is he awake and responding to you?","Yes, he can hear me, but he looks very pale.","awake"],
-["How old is he?","He's 62 years old.","age"],
-["Does he have a history of heart problems?","He has high blood pressure. I don't know about anything else.","history"]
-]
-},
-{
-question:"I understand. Does he have any other symptoms?",
-options:[
-["Is he sweating or feeling dizzy?","Yes! He's sweating a lot and says he feels dizzy.","symptoms"],
-["When did the pain start?","About five minutes ago.","time"],
-["Stay on the line with me. Help is being arranged.","Okay. Please hurry!","reassure"]
-]
-}
+{options:[
+["Is he conscious and breathing?","Yes, he's awake, but he's having trouble breathing.",["conscious","breathing","awake","unresponsive"]],
+["Tell me exactly what happened.","He said his chest started hurting about five minutes ago.",["happened","what happened","tell me","pain","chest"]],
+["Is anyone else there with you?","It's just me and him. I'm his wife.",["anyone","alone","who is there"]]
+]},
+{options:[
+["Is he awake and responding to you?","Yes, he can hear me, but he looks very pale.",["awake","responding","hear"]],
+["How old is he?","He's 62 years old.",["age","old","how old"]],
+["Does he have a history of heart problems?","He has high blood pressure. I don't know about anything else.",["history","medical","problems","heart"]]
+]},
+{options:[
+["Is he sweating or feeling dizzy?","Yes! He's sweating a lot and says he feels dizzy.",["sweating","dizzy","symptoms"]],
+["When did the pain start?","About five minutes ago.",["when","time","started"]],
+["Stay on the line with me. Help is being arranged.","Okay. Please hurry!",["stay","help","arranged","line"]]
+]}
 ],
-finish:"Caller remains on the line. The patient is conscious but experiencing chest pain and difficulty breathing."
+finish:"The patient is conscious but experiencing chest pain and difficulty breathing."
 },
 {
-number:"(405) 555-0186",
-name:"Michael Carter",
-address:"500 Market Street",
-nature:"Armed Robbery",
-type:"police",
-priority:"1 - Emergency",
-description:"Caller reports an armed robbery at a convenience store. Suspect reportedly displayed a handgun.",
-x:530,y:160,
+number:"(405) 555-0186",name:"Michael Carter",
+address:"500 Market Street",nature:"Armed Robbery",
+type:"police",priority:"1 - Emergency",x:530,y:160,
 opening:"911, what is the address of your emergency?",
 steps:[
-{
-question:"500 Market Street! Someone is robbing the store!",
-options:[
-["Are you inside the store right now?","Yes. I'm the cashier. I'm hiding behind the counter.","inside"],
-["Do you see a weapon?","Yes, he has a handgun.","weapon"],
-["Is anyone injured?","I don't think so. Everyone is hiding.","injuries"]
-]
-},
-{
-question:"Can you safely describe the suspect?",
-options:[
-["What is the suspect wearing?","Black hoodie, blue jeans, and a dark baseball cap.","clothing"],
-["Which direction did the suspect go?","He's still inside near the front counter.","location"],
-["How many suspects are there?","Just one that I can see.","count"]
-]
-},
-{
-question:"Stay hidden and do not confront the suspect.",
-options:[
-["Can you see the suspect's vehicle?","There's a dark sedan parked out front.","vehicle"],
-["Are there customers inside?","There are two customers hiding in the back.","customers"],
-["Keep the phone with you if it is safe.","Okay. I'm staying down.","reassure"]
-]
-}
+{options:[
+["Are you inside the store right now?","Yes. I'm the cashier. I'm hiding behind the counter.",["inside","store","where are you"]],
+["Do you see a weapon?","Yes, he has a handgun.",["weapon","gun","armed"]],
+["Is anyone injured?","I don't think so. Everyone is hiding.",["injured","hurt","injuries"]]
+]},
+{options:[
+["What is the suspect wearing?","Black hoodie, blue jeans, and a dark baseball cap.",["wearing","clothing","describe"]],
+["Which direction did the suspect go?","He's still inside near the front counter.",["direction","where did","go"]],
+["How many suspects are there?","Just one that I can see.",["how many","suspects","people"]]
+]},
+{options:[
+["Can you see the suspect's vehicle?","There's a dark sedan parked out front.",["vehicle","car"]],
+["Are there customers inside?","There are two customers hiding in the back.",["customers","people","others"]],
+["Keep the phone with you if it is safe.","Okay. I'm staying down.",["phone","stay","safe"]]
+]}
 ],
-finish:"One suspect, reportedly armed with a handgun. Multiple occupants inside. Caller hiding behind counter."
+finish:"One suspect reportedly armed with a handgun. Multiple occupants inside. Caller hiding behind counter."
 },
 {
-number:"(405) 555-0191",
-name:"Emily Johnson",
-address:"82 Oakwood Drive",
-nature:"Residential Structure Fire",
-type:"fire",
-priority:"1 - Emergency",
-description:"Caller reports a fire inside a residential home with smoke visible from the second floor.",
-x:170,y:370,
+number:"(405) 555-0191",name:"Emily Johnson",
+address:"82 Oakwood Drive",nature:"Residential Structure Fire",
+type:"fire",priority:"1 - Emergency",x:170,y:370,
 opening:"911, what is the address of your emergency?",
 steps:[
-{
-question:"82 Oakwood Drive! There's a fire in my house!",
-options:[
-["Are all occupants outside?","I'm outside, but I don't know if my brother got out.","occupants"],
-["Where is the fire located?","It looks like it's coming from upstairs.","location"],
-["Is anyone injured?","I'm okay, but I'm coughing from the smoke.","injuries"]
-]
-},
-{
-question:"Are there people still possibly inside?",
-options:[
-["How many people may be inside?","My brother might still be in his bedroom.","count"],
-["Can you safely see the entrance?","No, there's too much smoke.","visibility"],
-["Do not re-enter the building.","I won't. Please send someone!","reassure"]
-]
-},
-{
-question:"Are there any other hazards?",
-options:[
-["Are there gas cylinders or hazardous materials?","There's a propane grill outside, near the garage.","hazards"],
-["Is the fire spreading?","The smoke is getting thicker.","spreading"],
-["Are neighboring houses occupied?","Yes, there are people next door.","neighbors"]
-]
-}
+{options:[
+["Are all occupants outside?","I'm outside, but I don't know if my brother got out.",["outside","occupants","people"]],
+["Where is the fire located?","It looks like it's coming from upstairs.",["where","fire located","fire"]],
+["Is anyone injured?","I'm okay, but I'm coughing from the smoke.",["injured","hurt","smoke"]]
+]},
+{options:[
+["How many people may be inside?","My brother might still be in his bedroom.",["how many","inside","brother"]],
+["Can you safely see the entrance?","No, there's too much smoke.",["entrance","see","smoke"]],
+["Do not re-enter the building.","I won't. Please send someone!",["re-enter","building","send help"]]
+]},
+{options:[
+["Are there gas cylinders or hazardous materials?","There's a propane grill outside, near the garage.",["gas","hazard","materials"]],
+["Is the fire spreading?","The smoke is getting thicker.",["spreading","getting worse","thicker"]],
+["Are neighboring houses occupied?","Yes, there are people next door.",["neighbors","next door"]]
+]}
 ],
 finish:"Fire reported upstairs. One occupant may remain inside. Caller outside and coughing from smoke."
 },
 {
-number:"(405) 555-0124",
-name:"David Reynolds",
-address:"Highway 14, near mile marker 8",
-nature:"Traffic Collision",
-type:"police",
-priority:"2 - Urgent",
-description:"Two-vehicle collision. Caller reports one vehicle blocking the roadway and a possible injury.",
-x:400,y:80,
+number:"(405) 555-0124",name:"David Reynolds",
+address:"Highway 14, near mile marker 8",nature:"Traffic Collision",
+type:"police",priority:"2 - Urgent",x:400,y:80,
 opening:"911, what is the address of your emergency?",
 steps:[
-{
-question:"There's been a bad crash on Highway 14!",
-options:[
-["How many vehicles are involved?","Two vehicles. One is blocking the right lane.","vehicles"],
-["Is anyone injured?","One driver says their neck hurts.","injuries"],
-["Are the vehicles on fire?","No, I don't see any smoke.","fire"]
-]
-},
-{
-question:"Is traffic able to get around the vehicles?",
-options:[
-["Is the roadway completely blocked?","The right lane is blocked, but traffic is moving slowly.","traffic"],
-["Are the drivers outside their vehicles?","One is outside. The other is still sitting inside.","drivers"],
-["Can you provide a nearby landmark?","There's a gas station about a quarter mile away.","landmark"]
-]
-},
-{
-question:"Stay at a safe distance from the roadway.",
-options:[
-["Do you see leaking fuel or debris?","There is glass and debris across the road.","debris"],
-["Is the injured driver conscious?","Yes, they're talking to me.","conscious"],
-["Can you safely wait for responders?","Yes, I'm parked off the shoulder.","safe"]
-]
-}
+{options:[
+["How many vehicles are involved?","Two vehicles. One is blocking the right lane.",["how many","vehicles"]],
+["Is anyone injured?","One driver says their neck hurts.",["injured","hurt","injuries"]],
+["Are the vehicles on fire?","No, I don't see any smoke.",["fire","smoke"]]
+]},
+{options:[
+["Is the roadway completely blocked?","The right lane is blocked, but traffic is moving slowly.",["roadway","blocked","traffic"]],
+["Are the drivers outside their vehicles?","One is outside. The other is still sitting inside.",["drivers","outside","inside"]],
+["Can you provide a nearby landmark?","There's a gas station about a quarter mile away.",["landmark","nearby"]]
+]},
+{options:[
+["Do you see leaking fuel or debris?","There is glass and debris across the road.",["fuel","debris","leaking"]],
+["Is the injured driver conscious?","Yes, they're talking to me.",["conscious","awake"]],
+["Can you safely wait for responders?","Yes, I'm parked off the shoulder.",["safe","wait","responders"]]
+]}
 ],
 finish:"Two vehicles involved. One possible neck injury. Right lane partially blocked. Debris in roadway."
 }
 ];
 
-/* UNITS */
-const units=[
-{id:"1A12",dept:"Police",x:100,y:100},
-{id:"1A14",dept:"Police",x:190,y:260},
-{id:"1A16",dept:"Police",x:600,y:110},
-{id:"1A18",dept:"Police",x:660,y:400},
-{id:"2A21",dept:"Police",x:340,y:450},
-{id:"E21",dept:"Fire",x:100,y:400},
-{id:"E22",dept:"Fire",x:440,y:140},
-{id:"E23",dept:"Fire",x:680,y:260},
-{id:"M31",dept:"EMS",x:270,y:320},
-{id:"M32",dept:"EMS",x:520,y:400},
-{id:"M33",dept:"EMS",x:350,y:100},
-{id:"M34",dept:"EMS",x:700,y:490}
-].map(u=>({...u,status:"Available",incident:null,timer:0}));
+/* AUDIO */
+function getAudio(){
+if(!audioContext){
+const AC=window.AudioContext||window.webkitAudioContext;
+if(AC)audioContext=new AC();
+}
+if(audioContext&&audioContext.state==="suspended")audioContext.resume();
+return audioContext;
+}
+
+function tone(freq,duration,volume=.06){
+const ac=getAudio();if(!ac)return;
+const osc=ac.createOscillator();
+const gain=ac.createGain();
+osc.type="sine";osc.frequency.value=freq;
+gain.gain.setValueAtTime(volume,ac.currentTime);
+gain.gain.exponentialRampToValueAtTime(.001,ac.currentTime+duration);
+osc.connect(gain);gain.connect(ac.destination);
+osc.start();osc.stop(ac.currentTime+duration);
+}
+
+function playRing(){
+stopRing();
+tone(440,.35);
+ringtoneTimer=setInterval(()=>{tone(440,.35);setTimeout(()=>tone(480,.35),400)},2200);
+}
+function stopRing(){
+if(ringtoneTimer){clearInterval(ringtoneTimer);ringtoneTimer=null;}
+}
+
+function speak(text,kind="caller"){
+if(!voiceEnabled||!("speechSynthesis" in window))return;
+speechSynthesis.cancel();
+const utterance=new SpeechSynthesisUtterance(text);
+utterance.rate=kind==="caller"?.91:1;
+utterance.pitch=kind==="caller"?.98:1;
+utterance.volume=1;
+const voices=speechSynthesis.getVoices();
+if(kind==="caller"){
+const female=voices.find(v=>/female/i.test(v.name));
+if(female)utterance.voice=female;
+}
+speechSynthesis.speak(utterance);
+}
+
+function toggleVoice(){
+voiceEnabled=!voiceEnabled;
+$("voiceBtn").textContent=voiceEnabled?"🔊 VOICE: ON":"🔇 VOICE: OFF";
+$("voiceStatus").textContent=voiceEnabled?"Caller audio enabled.":"Caller audio muted.";
+if(!voiceEnabled&&"speechSynthesis"in window)speechSynthesis.cancel();
+}
 
 /* CLOCK */
 function time(){
 return [Math.floor(seconds/3600)%24,Math.floor(seconds/60)%60,seconds%60]
 .map(n=>String(n).padStart(2,"0")).join(":");
 }
-setInterval(()=>{
-seconds++;
-$("clock").textContent=time();
-},1000);
+setInterval(()=>{seconds++;$("clock").textContent=time();},1000);
 
 /* LOGGING */
 function log(text){
 let el=document.createElement("div");
-el.textContent=`${time()}  ${text}`;
+el.textContent=time()+"  "+text;
 $("systemLog").prepend(el);
 }
 function radio(unit,text){
+tone(850,.08,.025);
 let el=document.createElement("div");
 el.className="radio-line";
-let t=document.createElement("span");
-t.className="radio-time";t.textContent=time()+" ";
-let u=document.createElement("span");
-u.className="radio-unit";u.textContent=unit+" ";
-let m=document.createElement("span");
-m.className="radio-text";m.textContent=text;
+let t=document.createElement("span");t.className="radio-time";t.textContent=time()+" ";
+let u=document.createElement("span");u.className="radio-unit";u.textContent=unit+" ";
+let m=document.createElement("span");m.className="radio-text";m.textContent=text;
 el.append(t,u,document.createElement("br"),m);
 $("radioLog").prepend(el);
 }
 
-/* INCOMING CALL */
+/* CALL QUEUE */
 function nextCall(){
-if(currentCall && !currentCall.finished){
-alert("Finish or end the current call before receiving another call.");
-return;
+if(currentCall&&!currentCall.finished){
+alert("Complete or end the current call first.");return;
 }
 if(scenarioIndex>=scenarios.length){
-alert("All authored scenarios have been completed. More scenarios can be added to the scenario list.");
+alert("All four scenarios have been completed. More scenarios can be added to the scenario library.");
 return;
 }
-currentCall=scenarios[scenarioIndex];
-scenarioIndex++;
-currentStep=0;
-callAnswered=false;
-callerReady=true;
+if("speechSynthesis"in window)speechSynthesis.cancel();
+currentCall=scenarios[scenarioIndex++];
+currentStep=0;callAnswered=false;
 $("callerNumber").textContent=currentCall.number;
-$("callerLocation").textContent="Incoming call • Location not yet verified";
+$("callerLocation").textContent="Incoming call • Address not verified";
 $("ringStatus").textContent="● RINGING";
-$("ringStatus").className="ring";
+$("ringStatus").classList.add("pulse");
 $("phoneBar").textContent="RINGING";
 $("answerBtn").disabled=false;
 $("endBtn").disabled=true;
+$("micBtn").disabled=true;
 $("callPhase").textContent="INCOMING";
-$("conversation").innerHTML='<div class="message caller"><small>INCOMING CALL</small>911 emergency line ringing. Answer to connect with caller.</div>';
+$("conversation").innerHTML="";
+addMessage("SYSTEM","Incoming 911 line. Telephone ringing.");
 $("questions").innerHTML="";
 $("createBtn").disabled=true;
 $("callerName").value="";
 $("callback").value=currentCall.number;
 $("callerAddress").value="";
 $("nature").value="";
+playRing();
 log("INCOMING CALL: "+currentCall.number);
-radio("SYSTEM","Incoming 911 telephone line.");
-drawMap();
+radio("SYSTEM","Emergency telephone line ringing.");
 }
 
+/* ANSWER */
 function answerCall(){
-if(!currentCall || callAnswered)return;
+if(!currentCall||callAnswered)return;
+getAudio();
+stopRing();
 callAnswered=true;
 $("ringStatus").textContent="● CONNECTED";
-$("ringStatus").className="online";
+$("ringStatus").classList.remove("pulse");
 $("phoneBar").textContent="CONNECTED";
 $("answerBtn").disabled=true;
 $("endBtn").disabled=false;
+$("micBtn").disabled=false;
 $("callPhase").textContent="CALL IN PROGRESS";
 $("callerName").value=currentCall.name;
 $("callback").value=currentCall.number;
-$("conversation").innerHTML="";
 addMessage("DISPATCHER","911, what is the address of your emergency?");
 addMessage("CALLER",currentCall.opening);
-log("Operator answered emergency call.");
-radio("SYSTEM","911 call connected to console 01.");
+speak(currentCall.opening);
 showQuestions();
+log("Operator answered emergency call.");
+radio("SYSTEM","Telephone connection established.");
 }
 
+function endCall(){
+if(!callAnswered)return;
+if(!confirm("Disconnect this caller?"))return;
+if(listening)stopMic();
+if("speechSynthesis"in window)speechSynthesis.cancel();
+callAnswered=false;
+addMessage("SYSTEM","Telephone connection terminated.");
+$("ringStatus").textContent="● DISCONNECTED";
+$("phoneBar").textContent="STANDBY";
+$("endBtn").disabled=true;
+$("micBtn").disabled=true;
+$("callPhase").textContent="CALL ENDED";
+$("questions").innerHTML="";
+log("Telephone connection ended.");
+}
+
+/* CONVERSATION */
 function addMessage(who,text){
 let el=document.createElement("div");
-el.className="message "+(who==="CALLER"?"caller":"dispatcher");
-let small=document.createElement("small");
-small.textContent=who;
-let content=document.createElement("span");
-content.textContent=text;
+el.className="message "+(who==="CALLER"?"caller":who==="DISPATCHER"?"dispatcher":"system");
+let small=document.createElement("small");small.textContent=who;
+let content=document.createElement("span");content.textContent=text;
 el.append(small,content);
 $("conversation").appendChild(el);
 $("conversation").scrollTop=$("conversation").scrollHeight;
 }
 
 function showQuestions(){
-let box=$("questions");
-box.innerHTML="";
-if(!currentCall || !callAnswered)return;
-
+let box=$("questions");box.innerHTML="";
+if(!currentCall||!callAnswered)return;
 if(currentStep>=currentCall.steps.length){
-addMessage("DISPATCHER","Thank you. Stay on the line. I'm entering this information into our system.");
-addMessage("CALLER",currentCall.finish);
+addMessage("SYSTEM","Caller interrogation complete. Ready for incident entry.");
 $("callerAddress").value=currentCall.address;
 $("nature").value=currentCall.nature;
 $("createBtn").disabled=false;
 $("callPhase").textContent="READY FOR CAD ENTRY";
 return;
 }
-let step=currentCall.steps[currentStep];
-step.options.forEach(option=>{
+currentCall.steps[currentStep].options.forEach(option=>{
 let btn=document.createElement("button");
 btn.textContent="ASK: "+option[0];
 btn.onclick=()=>chooseQuestion(option);
@@ -625,56 +592,120 @@ box.appendChild(btn);
 }
 
 function chooseQuestion(option){
-if(!currentCall || !callAnswered)return;
+if(!currentCall||!callAnswered)return;
+if(listening)stopMic();
 addMessage("DISPATCHER",option[0]);
+speak(option[0],"dispatcher");
+setTimeout(()=>{
 addMessage("CALLER",option[1]);
-log("CALL INTERROGATION: "+option[0]);
+speak(option[1],"caller");
+},650);
+log("CALLER QUESTION: "+option[0]);
 currentStep++;
 showQuestions();
 }
 
-function endCall(){
-if(!callAnswered)return;
-if(!confirm("End this telephone call?"))return;
-addMessage("SYSTEM","Telephone connection terminated.");
-callAnswered=false;
-$("ringStatus").textContent="● DISCONNECTED";
-$("phoneBar").textContent="STANDBY";
-$("endBtn").disabled=true;
-$("callPhase").textContent="CALL ENDED";
-$("questions").innerHTML="";
-log("Telephone connection ended.");
+/* SPEECH RECOGNITION */
+function getRecognition(){
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR)return null;
+const r=new SR();
+r.lang="en-US";
+r.continuous=false;
+r.interimResults=true;
+return r;
 }
 
-/* INCIDENT CREATION */
-function openIncidentForm(){
-if(!currentCall || !callAnswered || currentStep<currentCall.steps.length){
-alert("Complete caller interrogation first.");
+function toggleMic(){
+if(listening){stopMic();return;}
+if(!callAnswered)return;
+recognition=getRecognition();
+if(!recognition){
+$("voiceStatus").textContent="Speech recognition is not supported in this browser. Use the question buttons instead.";
 return;
 }
-$("formType").value=currentCall.type==="ems"?"Medical Emergency":
-currentCall.type==="fire"?"Fire - Structure":
-currentCall.nature==="Traffic Collision"?"Traffic Collision":"Robbery";
-$("formPriority").value=currentCall.priority;
-$("formAddress").value=currentCall.address;
-$("formDescription").value=currentCall.finish;
-showTab("form",document.querySelectorAll(".tab")[2]);
+try{
+getAudio();
+recognition.onstart=()=>{
+listening=true;
+$("micBtn").classList.add("listening");
+$("micBtn").textContent="🔴 LISTENING...";
+$("voiceStatus").textContent="Listening to dispatcher. Speak clearly.";
+};
+recognition.onresult=e=>{
+let finalText="";
+let interim="";
+for(let i=e.resultIndex;i<e.results.length;i++){
+if(e.results[i].isFinal)finalText+=e.results[i][0].transcript;
+else interim+=e.results[i][0].transcript;
+}
+$("voiceStatus").textContent=interim?"Hearing: "+interim:"Processing speech...";
+if(finalText.trim())processSpeech(finalText.trim());
+};
+recognition.onerror=e=>{
+$("voiceStatus").textContent="Microphone: "+e.error+". Check browser permissions.";
+stopMic();
+};
+recognition.onend=()=>{
+listening=false;
+$("micBtn").classList.remove("listening");
+$("micBtn").textContent="🎙 TALK TO CALLER";
+};
+recognition.start();
+}catch(e){
+$("voiceStatus").textContent="Could not start microphone. Check microphone permissions.";
+stopMic();
+}
 }
 
+function stopMic(){
+if(recognition){
+try{recognition.stop()}catch(e){}
+}
+listening=false;
+$("micBtn").classList.remove("listening");
+$("micBtn").textContent="🎙 TALK TO CALLER";
+}
+
+function processSpeech(text){
+addMessage("DISPATCHER",text);
+log("VOICE INPUT: "+text);
+const normalized=text.toLowerCase();
+let best=null,bestScore=0;
+if(currentCall&&currentStep<currentCall.steps.length){
+currentCall.steps[currentStep].options.forEach(option=>{
+let score=0;
+option[2].forEach(keyword=>{
+if(normalized.includes(keyword))score+=keyword.split(" ").length+1;
+});
+if(score>bestScore){bestScore=score;best=option;}
+});
+}
+if(best&&bestScore>0){
+currentStep++;
+setTimeout(()=>{
+addMessage("CALLER",best[1]);
+speak(best[1]);
+showQuestions();
+},600);
+}else{
+const generic="I'm sorry, I'm upset and I don't know what else to tell you. Please send help.";
+setTimeout(()=>{
+addMessage("CALLER",generic);
+speak(generic);
+},600);
+$("voiceStatus").textContent="Response not matched to a scripted question. Try asking about the details shown on screen.";
+}
+}
+
+/* INCIDENT MANAGEMENT */
 function createIncident(data){
 let incident={
-id:incidentNumber++,
-name:data.name,
-address:data.address,
-nature:data.nature,
-description:data.description,
-type:data.type,
-priority:data.priority,
-x:data.x??400,y:data.y??250,
-status:"PENDING",
-units:[],
-created:time(),
-caller:data.caller||"Unknown"
+id:incidentNumber++,name:data.name,address:data.address,
+nature:data.nature,description:data.description,
+type:data.type,priority:data.priority,
+x:data.x,y:data.y,status:"PENDING",units:[],
+created:time(),caller:data.caller
 };
 calls.unshift(incident);
 selectedIncident=incident.id;
@@ -685,97 +716,111 @@ showTab("active",document.querySelectorAll(".tab")[0]);
 return incident;
 }
 
+function createCurrentIncident(){
+if(!currentCall||!callAnswered||currentStep<currentCall.steps.length)return;
+let c=currentCall;
+let incident=createIncident({
+name:c.name,address:c.address,nature:c.nature,
+description:c.finish,type:c.type,priority:c.priority,
+x:c.x,y:c.y,caller:c.number
+});
+currentCall.finished=true;
+$("createBtn").disabled=true;
+addMessage("SYSTEM","Incident #"+incident.id+" created in CAD.");
+speak("Your information has been received. Help is being sent. Please stay on the line if you can.");
+$("callPhase").textContent="INCIDENT ENTERED";
+}
+
 function createManualIncident(){
 let nature=$("formType").value;
 let type=nature.toLowerCase().includes("fire")?"fire":
 nature.toLowerCase().includes("medical")||nature.toLowerCase().includes("cardiac")||nature.toLowerCase().includes("overdose")?"ems":"police";
-let incident=createIncident({
-name:"Manual Entry",
-address:$("formAddress").value||"Location not provided",
-nature,
-description:$("formDescription").value||"No additional information.",
-type,
-priority:$("formPriority").value,
-caller:"Operator entry"
+createIncident({
+name:"Manual Entry",address:$("formAddress").value||"Location not provided",
+nature,description:$("formDescription").value||"No additional information.",
+type,priority:$("formPriority").value,caller:"Operator entry",
+x:400,y:250
 });
-alert("Incident #"+incident.id+" successfully entered into CAD.");
 }
 
-function createCurrentIncident(){
-let c=currentCall;
-let type=c.type;
-let incident=createIncident({
-name:c.name,address:c.address,nature:c.nature,
-description:c.finish,type,priority:c.priority,
-x:c.x,y:c.y,caller:c.number
-});
-$("createBtn").disabled=true;
-currentCall.finished=true;
-$("callPhase").textContent="INCIDENT ENTERED";
-addMessage("SYSTEM","Incident #"+incident.id+" created in CAD.");
-return incident;
-}
+/* UNITS */
+const units=[
+["1A12","Police",100,100],["1A14","Police",190,260],
+["1A16","Police",600,110],["1A18","Police",660,400],
+["2A21","Police",340,450],["E21","Fire",100,400],
+["E22","Fire",440,140],["E23","Fire",680,260],
+["M31","EMS",270,320],["M32","EMS",520,400],
+["M33","EMS",350,100],["M34","EMS",700,490]
+].map(u=>({id:u[0],dept:u[1],x:u[2],y:u[3],status:"Available",incident:null,timer:0}));
 
-/* UNIT MANAGEMENT */
 function renderUnits(){
-let list=$("unitList");
-list.innerHTML="";
+$("unitList").innerHTML="";
 units.forEach(u=>{
 let row=document.createElement("div");
 row.className="unit-row "+(selectedUnits.includes(u.id)?"chosen":"");
 let state=u.status==="Available"?"available":u.status==="On Scene"?"onscene":"busy";
-let status=u.status.toUpperCase();
-row.innerHTML=`
-<div><div class="unit-id">${u.id}</div><div class="unit-dept">${u.dept}</div></div>
-<div class="unit-select">${u.incident?"INC #"+u.incident:"FIELD UNIT"}</div>
-<div class="unit-state ${state}">${status}</div>`;
+row.innerHTML=`<div><div class="unit-id">${u.id}</div><div class="unit-dept">${u.dept}</div></div>
+<div class="unit-dept">${u.incident?"INC #"+u.incident:"FIELD UNIT"}</div>
+<div class="unit-state ${state}">${u.status.toUpperCase()}</div>`;
 row.onclick=()=>{
 if(u.status!=="Available")return;
-selectedUnits.includes(u.id)?
-selectedUnits=selectedUnits.filter(x=>x!==u.id):
-selectedUnits.push(u.id);
+selectedUnits.includes(u.id)?selectedUnits=selectedUnits.filter(x=>x!==u.id):selectedUnits.push(u.id);
 renderUnits();
 };
-list.appendChild(row);
+$("unitList").appendChild(row);
 });
 $("availTotal").textContent=units.filter(u=>u.status==="Available").length;
 $("busyTotal").textContent=units.filter(u=>u.status!=="Available").length;
-$("assignmentInfo").textContent=selectedUnits.length?
-"Selected: "+selectedUnits.join(", "):"Select an incident, then select available units.";
-let select=$("radioUnit");
-let old=select.value;
+$("assignmentInfo").textContent=selectedUnits.length?"Selected: "+selectedUnits.join(", "):"Select an incident, then available units.";
+let select=$("radioUnit"),old=select.value;
 select.innerHTML='<option value="DISPATCH">DISPATCH</option>';
 units.forEach(u=>{
 let o=document.createElement("option");
-o.value=u.id;o.textContent=u.id+" - "+u.dept;
-select.appendChild(o);
+o.value=u.id;o.textContent=u.id+" - "+u.dept;select.appendChild(o);
 });
 select.value=old||"DISPATCH";
 }
 
 function dispatchSelected(){
 let incident=calls.find(c=>c.id===selectedIncident);
-if(!incident){alert("Select an active incident first.");return;}
-if(!selectedUnits.length){alert("Select available units first.");return;}
+if(!incident){alert("Select an incident first.");return;}
+if(!selectedUnits.length){alert("Select available units.");return;}
 let compatible=selectedUnits.map(id=>units.find(u=>u.id===id)).filter(u=>
-u && u.status==="Available" &&
+u&&u.status==="Available"&&
 (incident.type==="police"?u.dept==="Police":
-incident.type==="fire"?u.dept==="Fire":u.dept==="EMS")
-);
-if(!compatible.length){
-alert("No compatible units selected. Check the department.");
-return;
-}
+incident.type==="fire"?u.dept==="Fire":u.dept==="EMS"));
+if(!compatible.length){alert("Select units from the correct department.");return;}
 compatible.forEach(u=>{
-u.status="En Route";
-u.incident=incident.id;
-u.timer=12;
+u.status="En Route";u.incident=incident.id;u.timer=12;
 incident.units.push(u.id);
 });
 incident.status="DISPATCHED";
-radio("DISPATCH",incident.units.join(", ")+" respond to incident "+incident.id+".");
+radio("DISPATCH",compatible.map(u=>u.id).join(", ")+" respond to incident "+incident.id+".");
+speak("Dispatch to "+compatible.map(u=>u.id).join(" and ")+". Respond to incident "+incident.id+".","dispatcher");
 log("UNITS DISPATCHED TO INCIDENT #"+incident.id);
 selectedUnits=[];
+render();
+}
+
+function clearSelectedUnit(){
+let id=selectedUnits[0];
+if(!id){alert("Select a unit first. Busy units cannot be selected in the available-unit list.");return;}
+}
+
+function clearUnit(id){
+let u=units.find(x=>x.id===id);
+if(!u)return;
+let inc=calls.find(c=>c.id===u.incident);
+u.status="Available";u.incident=null;u.timer=0;
+radio(u.id,"Available for assignment.");
+if(inc&&inc.units.every(id=>{
+let unit=units.find(x=>x.id===id);
+return !unit||unit.status==="Available";
+})){
+inc.status="CLEARED";
+log("INCIDENT #"+inc.id+" CLEARED.");
+radio("CAD","Incident "+inc.id+" cleared.");
+}
 render();
 }
 
@@ -783,148 +828,111 @@ render();
 function transmitRadio(){
 let unit=$("radioUnit").value;
 let message=$("radioMessage").value.trim();
-if(!message){alert("Enter a transmission first.");return;}
+if(!message){alert("Enter a radio transmission.");return;}
 radio(unit,message);
-log("RADIO TRANSMISSION: "+unit+" - "+message);
+log("RADIO: "+unit+" - "+message);
+speak(message,"dispatcher");
 $("radioMessage").value="";
 }
 
-/* INCIDENT TABS */
+/* TABS */
 function showTab(name,element){
 ["active","history","form"].forEach(t=>$(t+"Tab").classList.toggle("hidden",t!==name));
 document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
 if(element)element.classList.add("active");
 }
 
-/* INCIDENT DISPLAY */
+/* INCIDENTS */
 function render(){
 let active=calls.filter(c=>c.status!=="CLEARED");
-let historyList=calls.filter(c=>c.status==="CLEARED");
+let history=calls.filter(c=>c.status==="CLEARED");
 $("incidentList").innerHTML="";
-if(!active.length)$("incidentList").innerHTML='<div class="empty">No active incidents in CAD.</div>';
+if(!active.length)$("incidentList").innerHTML='<div class="empty">No active incidents.</div>';
 active.forEach(c=>{
 let row=document.createElement("div");
 row.className="incident-row";
 row.onclick=()=>{selectedIncident=c.id;render();};
 row.style.background=selectedIncident===c.id?"#203449":"";
 row.innerHTML=`<div style="display:flex;justify-content:space-between">
-<strong>#${c.id} • ${c.nature}</strong><span class="tag">${c.priority}</span>
-</div><small>${c.address} • ${c.status}</small>
+<strong>#${c.id} • ${c.nature}</strong><span class="tag">${c.priority}</span></div>
+<small>${c.address} • ${c.status}</small>
 <small>Units: ${c.units.length?c.units.join(", "):"NOT ASSIGNED"}</small>`;
 $("incidentList").appendChild(row);
 });
-$("historyList").innerHTML=historyList.length?historyList.map(c=>
+$("historyList").innerHTML=history.length?history.map(c=>
 `<div class="incident-row"><strong>#${c.id} • ${c.nature}</strong><small>${c.address} • CLEARED</small></div>`
 ).join(""):'<div class="empty">No cleared incidents.</div>';
-renderUnits();
-drawMap();
-}
-
-/* UNIT SIMULATION */
-setInterval(()=>{
-units.forEach(u=>{
-if(u.status==="En Route"){
-u.timer--;
-if(u.timer<=0){
-u.status="On Scene";
-radio(u.id,"Arrived on scene. Beginning assessment.");
-log(u.id+" ARRIVED ON SCENE.");
-let inc=calls.find(c=>c.id===u.incident);
-if(inc){
-inc.status="ON SCENE";
-}
-}
-}else if(u.status==="On Scene"){
-u.timer++;
-}
-});
-render();
-},1000);
-
-/* MANUAL UNIT STATUS */
-function clearUnit(id){
-let u=units.find(x=>x.id===id);
-if(!u)return;
-let inc=calls.find(c=>c.id===u.incident);
-u.status="Available";u.incident=null;u.timer=0;
-if(inc && inc.units.every(id=>{
-let unit=units.find(x=>x.id===id);
-return !unit || unit.status==="Available";
-})){
-inc.status="CLEARED";
-history.push(inc);
-log("INCIDENT #"+inc.id+" CLEARED.");
-radio("CAD","Incident "+inc.id+" cleared. All assigned units available.");
-}
-render();
+renderUnits();drawMap();
 }
 
 /* MAP */
 function drawMap(){
-let c=$("map"),ctx=c.getContext("2d");
-let w=c.width,h=c.height;
+let canvas=$("map"),ctx=canvas.getContext("2d");
+let w=canvas.width,h=canvas.height;
 ctx.fillStyle="#101c25";ctx.fillRect(0,0,w,h);
-
-// City blocks
-for(let x=10;x<w;x+=65){
-for(let y=10;y<h;y+=65){
-ctx.fillStyle=(Math.floor(x/65+y/65)%2)?"#182b32":"#1a2d34";
-ctx.fillRect(x+5,y+5,48,48);
+for(let x=10;x<w;x+=65)for(let y=10;y<h;y+=65){
+ctx.fillStyle="#192c34";ctx.fillRect(x+5,y+5,48,48);
 }
-}
-// Major roads
 ctx.strokeStyle="#43525b";ctx.lineWidth=17;
-for(let x=70;x<w;x+=150){
-ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
-}
-for(let y=70;y<h;y+=130){
-ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
-}
-// Road center markings
+for(let x=70;x<w;x+=150){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+for(let y=70;y<h;y+=130){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
 ctx.strokeStyle="#829096";ctx.lineWidth=1;ctx.setLineDash([8,10]);
-for(let x=70;x<w;x+=150){
-ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
-}
-for(let y=70;y<h;y+=130){
-ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
-}
+for(let x=70;x<w;x+=150){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+for(let y=70;y<h;y+=130){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
 ctx.setLineDash([]);
-
-// District labels
 ctx.fillStyle="#627d86";ctx.font="bold 12px Arial";
 ctx.fillText("NORTH DISTRICT",15,25);
 ctx.fillText("DOWNTOWN",320,25);
 ctx.fillText("WESTSIDE",15,530);
 ctx.fillText("EASTSIDE",640,530);
-
-// Units
 units.forEach(u=>{
-let color=u.dept==="Police"?"#438ff1":u.dept==="Fire"?"#ed5151":"#36d69b";
-ctx.fillStyle=color;
+ctx.fillStyle=u.dept==="Police"?"#438ff1":u.dept==="Fire"?"#ed5151":"#36d69b";
 ctx.beginPath();ctx.arc(u.x,u.y,7,0,Math.PI*2);ctx.fill();
-ctx.strokeStyle="#ffffff";ctx.lineWidth=1;ctx.stroke();
+ctx.strokeStyle="#fff";ctx.lineWidth=1;ctx.stroke();
 ctx.fillStyle="#dce9ef";ctx.font="bold 10px Arial";
 ctx.fillText(u.id,u.x+9,u.y-7);
 });
-
-// Incidents
 calls.filter(c=>c.status!=="CLEARED").forEach(c=>{
-ctx.fillStyle="#f2bd50";
-ctx.beginPath();ctx.arc(c.x,c.y,10,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#f2bd50";ctx.beginPath();ctx.arc(c.x,c.y,10,0,Math.PI*2);ctx.fill();
 ctx.strokeStyle="#fff0b4";ctx.stroke();
 ctx.fillStyle="white";ctx.font="bold 11px Arial";
 ctx.fillText("#"+c.id,c.x+13,c.y+4);
 });
 }
 
-/* INITIALIZE */
+/* SIMULATED ARRIVALS */
+setInterval(()=>{
+let changed=false;
+units.forEach(u=>{
+if(u.status==="En Route"){
+u.timer--;
+if(u.timer<=0){
+u.status="On Scene";u.timer=0;changed=true;
+radio(u.id,"Arrived on scene. Beginning assessment.");
+log(u.id+" ARRIVED ON SCENE.");
+let inc=calls.find(c=>c.id===u.incident);
+if(inc)inc.status="ON SCENE";
+}
+}
+});
+if(changed)render();
+},1000);
+
+/* STARTUP */
+$("radioLog").innerHTML="";
+log("Communications console initialized.");
+log("CAD database online.");
+radio("SYSTEM","Primary radio channel active.");
 render();
 $("clock").textContent=time();
-radio("SYSTEM","Communications console initialized.");
-log("All communications systems operational.");
 
-// The first authored call enters the telephone queue.
-// It is not answered automatically.
+if(!("speechSynthesis"in window)){
+$("voiceStatus").textContent="Speech synthesis unavailable in this browser.";
+}
+if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){
+$("voiceStatus").textContent="Voice recognition unavailable. Use the question buttons or try Chrome.";
+}
+
 nextCall();
 </script>
 </body>
