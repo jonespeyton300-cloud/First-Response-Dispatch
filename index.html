@@ -1,1 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CODE 911 | Dispatch Simulator</title>
 
+<style>
+*{box-sizing:border-box}
+:root{
+--bg:#090f18;
+--panel:#111c2a;
+--panel2:#172537;
+--border:#29394d;
+--blue:#2188f5;
+--green:#28ce83;
+--red:#ff505c;
+--yellow:#f5bd48;
+--muted:#8495aa;
+}
+body{
+margin:0;
+background:var(--bg);
+color:#edf4fc;
+font-family:Arial,sans-serif;
+overflow-x:hidden;
+}
+header{
+height:68px;
+background:#101a28;
+border-bottom:1px solid var(--border);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 22px;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+background:#e63d49;
+width:39px;height:39px;
+border-radius:9px;
+display:grid;place-items:center;
+font-weight:bold;font-size:17px;
+}
+.brand h1{font-size:17px;margin:0;letter-spacing:1px}
+.brand small{color:var(--muted);font-size:10px;letter-spacing:2px}
+.header-right{display:flex;align-items:center;gap:20px;font-size:12px}
+.status-dot{color:var(--green)}
+.clock{font-size:17px;font-weight:bold;font-variant-numeric:tabular-nums}
+button{cursor:pointer;font-weight:bold}
+button:disabled{opacity:.4;cursor:not-allowed}
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;padding:15px 20px;
+}
+.stat{
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:9px;
+padding:13px 16px;
+}
+.stat span{display:block;color:var(--muted);font-size:10px;letter-spacing:1px}
+.stat strong{display:block;font-size:23px;margin-top:6px}
+main{
+display:grid;
+grid-template-columns:minmax(280px,1fr) minmax(330px,1.2fr) minmax(270px,.9fr);
+gap:13px;padding:0 20px 20px;
+}
+.panel{
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:10px;
+overflow:hidden;
+min-width:0;
+}
+.panel-head{
+padding:14px 15px;
+border-bottom:1px solid var(--border);
+display:flex;align-items:center;justify-content:space-between;
+font-size:12px;font-weight:bold;letter-spacing:1px;
+}
+.panel-head small{color:var(--muted);font-size:10px}
+.content{padding:12px}
+.call-list{display:flex;flex-direction:column;gap:10px;max-height:600px;overflow:auto}
+.call{
+background:#182638;
+border:1px solid #304157;
+border-left:4px solid var(--yellow);
+border-radius:7px;padding:12px;
+cursor:pointer;
+transition:.15s;
+}
+.call:hover{background:#20334a}
+.call.selected{border-color:var(--blue);background:#1c3550}
+.call.high{border-left-color:var(--red)}
+.call.medium{border-left-color:var(--yellow)}
+.call.low{border-left-color:var(--green)}
+.call-top{display:flex;justify-content:space-between;gap:5px}
+.call h3{font-size:13px;margin:0 0 7px}
+.call p{font-size:11px;color:#a9b8ca;margin:4px 0}
+.priority{
+font-size:9px;padding:4px 7px;border-radius:4px;
+background:#533038;color:#ff8991;height:max-content;
+}
+.priority.medium{background:#514323;color:#ffcf69}
+.priority.low{background:#174333;color:#70e7a8}
+.call-footer{
+display:flex;justify-content:space-between;
+margin-top:10px;font-size:10px;color:var(--muted);
+}
+.map-wrap{padding:10px;background:#0c1723}
+#map{
+width:100%;height:370px;display:block;
+border-radius:7px;background:#101e2a;
+}
+.map-legend{
+display:flex;gap:14px;flex-wrap:wrap;
+padding:12px;font-size:10px;color:var(--muted);
+}
+.legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.unit-list{display:flex;flex-direction:column;gap:8px}
+.unit{
+padding:10px;background:#182638;
+border:1px solid #304157;border-radius:7px;
+cursor:pointer;
+}
+.unit.selected{border-color:var(--blue);background:#1b3652}
+.unit-top{display:flex;justify-content:space-between;font-size:12px;font-weight:bold}
+.unit small{display:block;color:var(--muted);margin-top:6px;font-size:10px}
+.unit-status{font-size:9px;color:var(--green)}
+.unit-status.busy{color:var(--yellow)}
+.unit-status.scene{color:#6eb7ff}
+.dispatch-btn{
+width:100%;padding:13px;background:var(--blue);
+color:white;border:0;border-radius:6px;margin-top:12px;
+}
+.dispatch-btn:hover{background:#086fd8}
+.secondary{
+width:100%;padding:10px;background:#26394f;
+color:white;border:1px solid var(--border);
+border-radius:6px;margin-top:8px;
+}
+.section-title{
+font-size:10px;color:var(--muted);
+letter-spacing:1px;margin:17px 0 9px;
+}
+.activity{
+max-height:185px;overflow:auto;
+font-size:10px;color:#aab9ca;
+}
+.activity div{
+padding:8px 0;border-bottom:1px solid #253448;
+line-height:1.5;
+}
+.activity b{color:#e9f2ff}
+.empty{
+color:var(--muted);font-size:12px;
+text-align:center;padding:25px 5px;
+}
+#toast{
+position:fixed;bottom:20px;left:50%;
+transform:translateX(-50%);
+background:#203b56;color:white;
+padding:12px 20px;border-radius:7px;
+font-size:12px;display:none;
+z-index:10;
+}
+.footer{
+padding:12px 20px;border-top:1px solid var(--border);
+color:var(--muted);font-size:10px;
+display:flex;justify-content:space-between;
+}
+@media(max-width:1000px){
+main{grid-template-columns:1fr 1fr}
+.right-panel{grid-column:1/-1}
+}
+@media(max-width:650px){
+header{padding:0 12px}
+.header-right{gap:9px}
+.stats{grid-template-columns:1fr 1fr;padding:10px}
+main{grid-template-columns:1fr;padding:0 10px 15px}
+.right-panel{grid-column:auto}
+#map{height:300px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="brand">
+<div class="logo">911</div>
+<div>
+<h1>CODE 911</h1>
+<small>EMERGENCY DISPATCH CENTER</small>
+</div>
+</div>
+<div class="header-right">
+<span class="status-dot">● SYSTEM ONLINE</span>
+<span id="gameTime" class="clock">08:00:00</span>
+</div>
+</header>
+
+<section class="stats">
+<div class="stat"><span>ACTIVE INCIDENTS</span><strong id="activeCount">0</strong></div>
+<div class="stat"><span>AVAILABLE UNITS</span><strong id="availableCount">12</strong></div>
+<div class="stat"><span>CALLS RECEIVED</span><strong id="callsCount">0</strong></div>
+<div class="stat"><span>INCIDENTS RESOLVED</span><strong id="resolvedCount">0</strong></div>
+</section>
+
+<main>
+
+<!-- CALLS -->
+<section class="panel">
+<div class="panel-head">
+<span>☎ INCOMING 911 CALLS</span>
+<small id="queueCount">0 WAITING</small>
+</div>
+<div class="content">
+<div id="callList" class="call-list">
+<div class="empty">Waiting for incoming emergency calls...</div>
+</div>
+</div>
+</section>
+
+<!-- MAP -->
+<section class="panel">
+<div class="panel-head">
+<span>▦ CITY OPERATIONS MAP</span>
+<small>METRO COUNTY</small>
+</div>
+<div class="map-wrap">
+<canvas id="map" width="700" height="500"></canvas>
+</div>
+<div class="map-legend">
+<span><i class="legend-dot" style="background:#348dff"></i>Police</span>
+<span><i class="legend-dot" style="background:#ff4949"></i>Fire</span>
+<span><i class="legend-dot" style="background:#39d994"></i>EMS</span>
+<span><i class="legend-dot" style="background:#ffcf48"></i>Incident</span>
+</div>
+<div class="content">
+<div class="section-title">SELECTED INCIDENT</div>
+<div id="incidentDetails" class="empty">Select an incoming call to view its details.</div>
+</div>
+</section>
+
+<!-- UNITS -->
+<section class="panel right-panel">
+<div class="panel-head">
+<span>🚓 FIELD UNITS</span>
+<small id="unitCount">12 UNITS</small>
+</div>
+<div class="content">
+<div id="unitList" class="unit-list"></div>
+<button class="dispatch-btn" id="dispatchBtn" onclick="dispatchUnits()">DISPATCH SELECTED UNITS</button>
+<button class="secondary" onclick="clearSelection()">CLEAR SELECTION</button>
+
+<div class="section-title">DISPATCH ACTIVITY LOG</div>
+<div class="activity" id="activityLog">
+<div>System initialized. Dispatch center online.</div>
+</div>
+</div>
+</section>
+
+</main>
+
+<div class="footer">
+<span>CODE 911 DISPATCH SIMULATOR</span>
+<span>TRAINING SIMULATION | VERSION 1.0</span>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let gameSeconds = 8*3600;
+let totalCalls = 0;
+let resolved = 0;
+let calls = [];
+let selectedCall = null;
+let selectedUnits = [];
+let nextCallId = 1;
+
+const incidentTypes = [
+{
+name:"Armed Robbery",
+type:"police",
+priority:"HIGH",
+description:"Caller reports an armed robbery in progress.",
+location:"Downtown Bank",
+address:"100 Main Street",
+x:350,y:190
+},
+{
+name:"Structure Fire",
+type:"fire",
+priority:"HIGH",
+description:"Caller reports smoke and flames coming from a building.",
+location:"West Industrial District",
+address:"240 Industrial Road",
+x:140,y:130
+},
+{
+name:"Medical Emergency",
+type:"ems",
+priority:"HIGH",
+description:"Caller reports a person unconscious and unresponsive.",
+location:"Central Shopping Mall",
+address:"450 Commerce Avenue",
+x:470,y:300
+},
+{
+name:"Traffic Collision",
+type:"police",
+priority:"MEDIUM",
+description:"Two vehicles involved in a collision. Traffic blocked.",
+location:"North Highway",
+address:"Highway 14",
+x:310,y:75
+},
+{
+name:"House Fire",
+type:"fire",
+priority:"HIGH",
+description:"Residential house fire. Occupants may still be inside.",
+location:"Oakwood Neighborhood",
+address:"82 Oakwood Drive",
+x:540,y:110
+},
+{
+name:"Cardiac Arrest",
+type:"ems",
+priority:"HIGH",
+description:"Caller reports an individual suffering cardiac arrest.",
+location:"City Park",
+address:"25 Park Avenue",
+x:530,y:410
+},
+{
+name:"Domestic Disturbance",
+type:"police",
+priority:"MEDIUM",
+description:"Neighbors report a loud disturbance and possible violence.",
+location:"Southside Apartments",
+address:"190 South Street",
+x:180,y:390
+},
+{
+name:"Vehicle Theft",
+type:"police",
+priority:"LOW",
+description:"Caller reports their vehicle has been stolen.",
+location:"Riverside Parking",
+address:"60 River Road",
+x:90,y:290
+},
+{
+name:"Gas Leak",
+type:"fire",
+priority:"HIGH",
+description:"Strong smell of gas reported inside a commercial property.",
+location:"Market District",
+address:"320 Market Street",
+x:410,y:390
+},
+{
+name:"Welfare Check",
+type:"police",
+priority:"LOW",
+description:"Caller requests a welfare check on a resident.",
+location:"Pine Street",
+address:"72 Pine Street",
+x:610,y:210
+},
+{
+name:"Overdose",
+type:"ems",
+priority:"HIGH",
+description:"Caller reports a possible drug overdose.",
+location:"Eastside Motel",
+address:"88 East Boulevard",
+x:620,y:350
+},
+{
+name:"Shoplifting",
+type:"police",
+priority:"LOW",
+description:"Store security reports a shoplifting incident.",
+location:"Metro Superstore",
+address:"500 Commerce Avenue",
+x:390,y:280
+}
+];
+
+const unitData = [
+["PD-101","Police",90,100],
+["PD-102","Police",160,200],
+["PD-103","Police",270,340],
+["PD-104","Police",570,160],
+["PD-105","Police",490,420],
+["FD-201","Fire",110,370],
+["FD-202","Fire",300,110],
+["FD-203","Fire",570,310],
+["EMS-301","EMS",220,280],
+["EMS-302","EMS",440,120],
+["EMS-303","EMS",610,430],
+["EMS-304","EMS",350,450]
+];
+
+let units = unitData.map((u,i)=>({
+id:u[0],
+type:u[1],
+x:u[2],
+y:u[3],
+status:"Available",
+target:null,
+selected:false,
+timer:0
+}));
+
+function log(message){
+const el=document.createElement("div");
+const time=formatTime();
+el.innerHTML=`<b>[${time}]</b> ${message}`;
+$("activityLog").prepend(el);
+}
+
+function formatTime(){
+let h=Math.floor(gameSeconds/3600)%24;
+let m=Math.floor(gameSeconds/60)%60;
+let s=gameSeconds%60;
+return [h,m,s].map(v=>String(v).padStart(2,"0")).join(":");
+}
+
+function toast(message){
+const t=$("toast");
+t.textContent=message;
+t.style.display="block";
+clearTimeout(toast.timer);
+toast.timer=setTimeout(()=>t.style.display="none",2200);
+}
+
+function createCall(){
+const template=incidentTypes[Math.floor(Math.random()*incidentTypes.length)];
+
+const call={
+id:nextCallId++,
+name:template.name,
+type:template.type,
+priority:template.priority,
+description:template.description,
+location:template.location,
+address:template.address,
+x:template.x+Math.floor(Math.random()*35-17),
+y:template.y+Math.floor(Math.random()*35-17),
+status:"Waiting",
+elapsed:0,
+assigned:[],
+timer:0
+};
+
+calls.unshift(call);
+totalCalls++;
+log(`NEW 911 CALL: ${call.name} - ${call.location}`);
+render();
+toast("NEW EMERGENCY CALL RECEIVED");
+}
+
+function selectCall(id){
+selectedCall=id;
+selectedUnits=[];
+render();
+}
+
+function selectUnit(id){
+const unit=units.find(u=>u.id===id);
+if(!unit || unit.status!=="Available")return;
+
+unit.selected=!unit.selected;
+
+if(unit.selected){
+if(!selectedUnits.includes(id))selectedUnits.push(id);
+}else{
+selectedUnits=selectedUnits.filter(x=>x!==id);
+}
+render();
+}
+
+function dispatchUnits(){
+const call=calls.find(c=>c.id===selectedCall);
+
+if(!call){
+toast("Select an incident first.");
+return;
+}
+
+const available=selectedUnits
+.map(id=>units.find(u=>u.id===id))
+.filter(u=>u && u.status==="Available");
+
+if(available.length===0){
+toast("Select at least one available unit.");
+return;
+}
+
+const compatible=available.filter(u=>
+call.type==="police"?u.type==="Police":
+call.type==="fire"?u.type==="Fire":
+u.type==="EMS"
+);
+
+if(compatible.length===0){
+toast("No compatible units selected for this call.");
+return;
+}
+
+compatible.forEach(unit=>{
+unit.status="En Route";
+unit.target=call.id;
+unit.timer=12+Math.floor(Math.random()*12);
+unit.selected=false;
+call.assigned.push(unit.id);
+});
+
+call.status="Units En Route";
+selectedUnits=[];
+log(`${compatible.map(u=>u.id).join(", ")} dispatched to ${call.name}.`);
+toast(`${compatible.length} UNIT(S) DISPATCHED`);
+render();
+}
+
+function clearSelection(){
+selectedUnits=[];
+units.forEach(u=>u.selected=false);
+render();
+}
+
+function completeIncident(call){
+call.status="Resolved";
+call.assigned.forEach(id=>{
+const unit=units.find(u=>u.id===id);
+if(unit){
+unit.status="Available";
+unit.target=null;
+unit.timer=0;
+unit.x=call.x+Math.random()*60-30;
+unit.y=call.y+Math.random()*60-30;
+}
+});
+resolved++;
+log(`INCIDENT #${call.id} RESOLVED: ${call.name}`);
+toast("INCIDENT RESOLVED");
+}
+
+function updateSimulation(){
+gameSeconds++;
+$("gameTime").textContent=formatTime();
+
+units.forEach(unit=>{
+if(unit.status==="En Route"){
+unit.timer--;
+if(unit.timer<=0){
+unit.status="On Scene";
+unit.timer=20+Math.floor(Math.random()*20);
+log(`${unit.id} arrived on scene.`);
+}
+}else if(unit.status==="On Scene"){
+unit.timer--;
+if(unit.timer<=0){
+const call=calls.find(c=>c.id===unit.target);
+if(call){
+unit.status="Clearing";
+unit.timer=5;
+log(`${unit.id} clearing scene.`);
+}
+}
+}else if(unit.status==="Clearing"){
+unit.timer--;
+if(unit.timer<=0){
+unit.status="Available";
+unit.target=null;
+unit.timer=0;
+}
+}
+});
+
+calls.forEach(call=>{
+if(call.status==="Waiting" || call.status==="Units En Route"){
+call.elapsed++;
+}
+if(call.status==="Units En Route"){
+const assigned=call.assigned.map(id=>units.find(u=>u.id===id)).filter(Boolean);
+if(assigned.length && assigned.every(u=>u.status==="On Scene" || u.status==="Clearing" || u.status==="Available")){
+call.status="On Scene";
+log(`Units arrived at ${call.location}. Incident being handled.`);
+}
+}
+if(call.status==="On Scene"){
+const assigned=call.assigned.map(id=>units.find(u=>u.id===id)).filter(Boolean);
+if(assigned.length && assigned.every(u=>u.status==="Available")){
+completeIncident(call);
+}
+}
+});
+
+render();
+}
+
+function render(){
+const active=calls.filter(c=>c.status!=="Resolved");
+
+$("activeCount").textContent=active.length;
+$("availableCount").textContent=units.filter(u=>u.status==="Available").length;
+$("callsCount").textContent=totalCalls;
+$("resolvedCount").textContent=resolved;
+$("queueCount").textContent=calls.filter(c=>c.status==="Waiting").length+" WAITING";
+$("unitCount").textContent=units.length+" UNITS";
+
+const list=$("callList");
+list.innerHTML="";
+
+const visible=calls.filter(c=>c.status!=="Resolved");
+
+if(visible.length===0){
+list.innerHTML='<div class="empty">No active calls. Standing by...</div>';
+}
+
+visible.forEach(call=>{
+const div=document.createElement("div");
+div.className=`call ${call.priority.toLowerCase()} ${selectedCall===call.id?"selected":""}`;
+div.onclick=()=>selectCall(call.id);
+
+div.innerHTML=`
+<div class="call-top">
+<h3>#${call.id} - ${call.name}</h3>
+<span class="priority ${call.priority.toLowerCase()}">${call.priority}</span>
+</div>
+<p>⌖ ${call.location}</p>
+<p>${call.address}</p>
+<p>${call.description}</p>
+<div class="call-footer">
+<span>${call.status}</span>
+<span>${Math.floor(call.elapsed/60)}:${String(call.elapsed%60).padStart(2,"0")}</span>
+</div>
+`;
+list.appendChild(div);
+});
+
+const unitList=$("unitList");
+unitList.innerHTML="";
+
+units.forEach(unit=>{
+const div=document.createElement("div");
+div.className=`unit ${unit.selected?"selected":""}`;
+div.onclick=()=>selectUnit(unit.id);
+
+const icon=unit.type==="Police"?"🚓":unit.type==="Fire"?"🚒":"🚑";
+const statusClass=unit.status==="Available"?"":unit.status==="On Scene"?"scene":"busy";
+
+div.innerHTML=`
+<div class="unit-top">
+<span>${icon} ${unit.id}</span>
+<span class="unit-status ${statusClass}">${unit.status.toUpperCase()}</span>
+</div>
+<small>${unit.type} Department ${unit.status!=="Available"?"• "+unit.timer+"s":""}</small>
+`;
+unitList.appendChild(div);
+});
+
+const details=$("incidentDetails");
+const selected=calls.find(c=>c.id===selectedCall);
+
+if(!selected){
+details.innerHTML="Select an incoming call to view its details.";
+details.className="empty";
+}else{
+details.className="";
+details.innerHTML=`
+<strong>#${selected.id} - ${selected.name}</strong>
+<p style="color:#aab9ca;font-size:11px;line-height:1.7">
+Location: ${selected.location}<br>
+Address: ${selected.address}<br>
+Priority: ${selected.priority}<br>
+Status: ${selected.status}<br>
+Description: ${selected.description}<br>
+Assigned Units: ${selected.assigned.length?selected.assigned.join(", "):"None"}
+</p>
+`;
+}
+
+drawMap();
+}
+
+function drawMap(){
+const canvas=$("map");
+const ctx=canvas.getContext("2d");
+const w=canvas.width,h=canvas.height;
+
+ctx.fillStyle="#101e2a";
+ctx.fillRect(0,0,w,h);
+
+// City blocks
+for(let x=20;x<w;x+=85){
+for(let y=20;y<h;y+=75){
+ctx.fillStyle="#172a35";
+ctx.fillRect(x+7,y+7,55,45);
+}
+}
+
+// Roads
+ctx.strokeStyle="#344958";
+ctx.lineWidth=13;
+for(let x=55;x<w;x+=115){
+ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
+}
+for(let y=65;y<h;y+=105){
+ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
+}
+
+// Road markings
+ctx.strokeStyle="#70808a";
+ctx.lineWidth=1.5;
+ctx.setLineDash([12,12]);
+for(let x=55;x<w;x+=115){
+ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
+}
+for(let y=65;y<h;y+=105){
+ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
+}
+ctx.setLineDash([]);
+
+// District labels
+ctx.fillStyle="#526879";
+ctx.font="bold 12px Arial";
+ctx.fillText("NORTH DISTRICT",20,25);
+ctx.fillText("DOWNTOWN",280,25);
+ctx.fillText("WESTSIDE",20,480);
+ctx.fillText("EASTSIDE",565,480);
+
+// Incident markers
+calls.filter(c=>c.status!=="Resolved").forEach(call=>{
+ctx.beginPath();
+ctx.arc(call.x,call.y,10,0,Math.PI*2);
+ctx.fillStyle="#ffcf48";
+ctx.fill();
+ctx.strokeStyle="#fff0ae";
+ctx.lineWidth=2;
+ctx.stroke();
+
+ctx.fillStyle="#ffffff";
+ctx.font="bold 11px Arial";
+ctx.fillText("!"+call.id,call.x+12,call.y-10);
+});
+
+// Units
+units.forEach(unit=>{
+const color=unit.type==="Police"?"#348dff":
+unit.type==="Fire"?"#ff4949":"#39d994";
+
+ctx.beginPath();
+ctx.arc(unit.x,unit.y,8,0,Math.PI*2);
+ctx.fillStyle=color;
+ctx.fill();
+
+if(unit.selected){
+ctx.beginPath();
+ctx.arc(unit.x,unit.y,13,0,Math.PI*2);
+ctx.strokeStyle="#ffffff";
+ctx.lineWidth=2;
+ctx.stroke();
+}
+
+ctx.fillStyle="#ffffff";
+ctx.font="bold 9px Arial";
+ctx.fillText(unit.id,unit.x+11,unit.y+4);
+});
+}
+
+// Initial calls
+createCall();
+createCall();
+createCall();
+
+// Simulation clock
+setInterval(updateSimulation,1000);
+
+// Random calls every 15-25 seconds
+function scheduleCall(){
+const delay=15000+Math.random()*10000;
+setTimeout(()=>{
+createCall();
+scheduleCall();
+},delay);
+}
+scheduleCall();
+
+</script>
+</body>
+</html>
